@@ -109,5 +109,30 @@ services:
     networks:
       - spring-cloud-net
 
+
+ # Parada Service
+  parada-service:
+    build:
+      context: ./parada-service
+    container_name: parada-service
+    ports:
+      - "8084:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - parada-db
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://parada-db:27017/parada_db
+
+  # Base de datos MongoDB para parada-service
+  parada-db:
+    image: mongo:latest
+    container_name: parada-db
+    ports:
+      - "27018:27017"  # Puerto para el segundo contenedor de MongoDB
+    restart: unless-stopped
+    networks:
+      - spring-cloud-net
+
 networks:
   spring-cloud-net:

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Document(collection = "monopatines")
+@Document
 @Data
 @NoArgsConstructor
 public class Monopatin {

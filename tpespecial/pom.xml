@@ -30,6 +30,7 @@
 		<module>usuario-service</module>
 		<module>monopatin-service</module>
 		<module>viaje-service</module>
+		<module>parada-service</module>
 		
 	</modules>
 

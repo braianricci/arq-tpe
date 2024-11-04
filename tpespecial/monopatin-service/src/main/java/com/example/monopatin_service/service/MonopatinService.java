@@ -11,8 +11,8 @@ public interface MonopatinService {
     
     List<MonopatinResponse> getAllMonopatines();
     MonopatinResponse getMonopatinById(String id);
-    void addMonopatin(MonopatinCreateRequest usuario);
-    void putMonopatin(String id, MonopatinUpdateRequest usuario);
+    void addMonopatin(MonopatinCreateRequest monopatin);
+    void putMonopatin(String id, MonopatinUpdateRequest monopatin);
     void deleteMonopatin(String id);
 
 }
