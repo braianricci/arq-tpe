@@ -1,0 +1,113 @@
+services:
+
+  # Eureka Server
+  eureka-server:
+    build:
+      context: ./eureka-server
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - spring-cloud-net
+
+  # Api Gateway
+  api-gateway:
+    build:
+      context: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - eureka-server
+
+
+  # User Service
+  usuario-service:
+    build:
+      context: ./usuario-service
+    container_name: usuario-service
+    ports:
+      - "8081:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - usuario-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://usuario-db:3306/usuario_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+  # Base de datos MySQL para usuario-service
+  usuario-db:
+    image: mysql:8.0
+    container_name: usuario-db
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: usuario_db
+    networks:
+      - spring-cloud-net
+
+
+  # Monopatin Service
+  monopatin-service:
+    build:
+      context: ./monopatin-service
+    container_name: monopatin-service
+    ports:
+      - "8082:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - monopatin-db
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://monopatin-db:27017/monopatin_db
+
+  # Base de datos MongoDB para monopatin-service
+  monopatin-db:
+    image: mongo:latest
+    container_name: monopatin-db
+    ports:
+      - "27017:27017"  # Puerto estándar de MongoDB
+    restart: unless-stopped
+    networks:
+      - spring-cloud-net
+
+
+# Viaje Service
+  viaje-service:
+    build:
+      context: ./viaje-service
+    container_name: viaje-service
+    ports:
+      - "8083:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - viaje-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://viaje-db:3306/viaje_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+  # Base de datos MySQL para viaje-service
+  viaje-db:
+    image: mysql:8.0
+    container_name: viaje-db
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: viaje_db
+    networks:
+      - spring-cloud-net
+
+networks:
+  spring-cloud-net:

@@ -1,0 +1,13 @@
+# Dockerfile en /viaje-service
+
+FROM openjdk:17-jdk-slim
+VOLUME /tmp
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia el archivo JAR al directorio de trabajo
+COPY target/viaje-service-0.0.1-SNAPSHOT.jar app.jar
+
+# Ejecuta la aplicación
+ENTRYPOINT ["java", "-jar", "app.jar"]
