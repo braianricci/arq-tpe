@@ -1,6 +1,5 @@
 package com.example.viaje_service.model.entity;
 
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -14,12 +13,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Data
 @NoArgsConstructor
 public class Viaje {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
@@ -42,8 +40,6 @@ public class Viaje {
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaPausaFin;
 
-    
-
     public Viaje(Long usuario_id, Long monopatin_id, Long paradaInicioId, BigDecimal tarifaAplicada) {
         this.usuarioId = usuario_id;
         this.monopatinId = monopatin_id;
@@ -65,8 +61,8 @@ public class Viaje {
     }
 
     public enum EstadoViaje {
-        ACTIVO, 
-        FINALIZADO, 
+        ACTIVO,
+        FINALIZADO,
         PAUSADO
     }
 
@@ -74,6 +70,5 @@ public class Viaje {
         NORMAL,
         PAUSA_EXTENDIDA
     }
-
 
 }

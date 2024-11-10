@@ -9,9 +9,13 @@ public interface ViajeService {
 
     // Métodos CRUD
     List<ViajeResponse> getAllViajes();
+
     ViajeResponse getViajeById(Long id);
+
     ViajeResponse addViaje(ViajeCreateRequest viaje);
+
     void updateViaje(Long id, ViajeUpdateRequest viaje);
+
     void deleteViaje(Long id);
 
 }
