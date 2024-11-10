@@ -2,6 +2,7 @@ package com.example.viaje_service.model.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +46,7 @@ public class Viaje {
         this.monopatinId = monopatin_id;
         this.paradaInicioId = paradaInicioId;
         this.tarifaAplicada = tarifaAplicada;
-        this.fechaInicio = LocalDateTime.now();
+        this.fechaInicio = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         this.estado = EstadoViaje.ACTIVO;
         this.kilometrosRecorridos = BigDecimal.ZERO;
         this.tipoTarifa = TipoTarifa.NORMAL;

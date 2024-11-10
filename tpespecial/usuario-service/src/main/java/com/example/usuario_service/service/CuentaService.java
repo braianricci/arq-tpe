@@ -14,5 +14,6 @@ public interface CuentaService {
     void addCuenta(CuentaRequest cuenta);
     void putCuenta(Long id, CuentaRequest cuenta);
     void deleteCuenta(Long id);
+    void anularCuenta(Long id);
 
 }

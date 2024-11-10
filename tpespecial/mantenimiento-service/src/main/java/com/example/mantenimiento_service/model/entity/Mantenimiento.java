@@ -1,7 +1,9 @@
 package com.example.mantenimiento_service.model.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,13 +25,15 @@ public class Mantenimiento {
 
     private Long idMonopatin;
     
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime fechaInicio;
+    @Column(columnDefinition = "DATETIME")
+    private LocalDateTime fechaFin;
     private EstadoMantenimiento estado;
 
     public Mantenimiento(Long idMonopatin){
         this.idMonopatin = idMonopatin;
-        this.fechaInicio = LocalDate.now();
+        this.fechaInicio = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         this.estado = EstadoMantenimiento.EN_CURSO;
     }
 

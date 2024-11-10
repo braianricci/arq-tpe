@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.http.ResponseEntity;
 
 import com.example.monopatin_service.model.dto.*;
 
@@ -45,4 +45,33 @@ public class MonopatinController {
     public void deleteMonopatin(@PathVariable String id) {
         monopatinService.deleteMonopatin(id);
     }
+
+    //g.
+    @GetMapping("/cercanos/{latitud}/{longitud}/{radio}")
+    public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(
+            @PathVariable Double latitud,
+            @PathVariable Double longitud,
+            @PathVariable Double radio) {
+        return monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
+    }
+
+
+    // REQUERIMIENTOS ENUNCIADO
+
+    //Registrar monopatín en mantenimiento
+
+    @PutMapping("/{id}/mantenimiento")
+    public ResponseEntity<Void> registrarMantenimiento(@PathVariable String id) {
+        monopatinService.marcarEnMantenimiento(id);
+        return ResponseEntity.ok().build();
+    }
+
+    //Registrar fin de mantenimiento
+    @PutMapping("/{id}/fin-mantenimiento")
+    public ResponseEntity<Void> finalizarMantenimiento(@PathVariable String id) {
+        monopatinService.marcarDisponible(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
+

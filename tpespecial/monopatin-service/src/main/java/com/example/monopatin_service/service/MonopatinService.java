@@ -2,11 +2,9 @@ package com.example.monopatin_service.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
 import com.example.monopatin_service.model.dto.*;
 
 
-@Service
 public interface MonopatinService {
     
     List<MonopatinResponse> getAllMonopatines();
@@ -14,5 +12,7 @@ public interface MonopatinService {
     void addMonopatin(MonopatinCreateRequest monopatin);
     void putMonopatin(String id, MonopatinUpdateRequest monopatin);
     void deleteMonopatin(String id);
-
+    List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(Double latitud, Double longitud, Double radio); //COMUNICACION ENTRE 2 MICROSERVICIOS
+    void marcarEnMantenimiento(String id);
+    void marcarDisponible(String id);
 }

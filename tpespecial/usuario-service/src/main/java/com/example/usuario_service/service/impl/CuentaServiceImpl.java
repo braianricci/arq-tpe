@@ -59,5 +59,13 @@ public class CuentaServiceImpl implements CuentaService {
         
             cuentaRepository.delete(c);
     }
+
+    @Override
+    public void anularCuenta(Long id) {
+        Cuenta cuenta = cuentaRepository.findById(id).orElse(null);
+        if(cuenta != null){
+            cuenta.setHabilitada(false);
+        }
+    }
  
 }

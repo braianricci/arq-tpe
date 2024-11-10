@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.geo.Point;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AccessLevel;
@@ -24,9 +26,13 @@ public class Monopatin {
 
     private String modelo;
     private EstadoMonopatin estado;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private Point ubicacion;
+
     private BigDecimal kilometrajeTotal;
     private Integer tiempoUsoTotal;
+    private Integer tiempoEnPausa;
     private LocalDateTime ultimoMantenimiento;
 
     public Monopatin(String modelo) {
@@ -35,6 +41,7 @@ public class Monopatin {
         this.ubicacion = null;
         this.kilometrajeTotal = BigDecimal.ZERO; 
         this.tiempoUsoTotal = 0; 
+        this.tiempoEnPausa = 0;
         this.ultimoMantenimiento = null;
     }
 
