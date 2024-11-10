@@ -9,7 +9,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.example</groupId>
 	<artifactId>viaje-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>viaje-service</name>
@@ -19,6 +18,8 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+
+	<!-- Viaje-Service -->
 	<dependencies>
 
 		<!-- JPA -->

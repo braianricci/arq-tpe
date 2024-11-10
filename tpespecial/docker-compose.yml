@@ -79,7 +79,7 @@ services:
       - spring-cloud-net
 
 
-# Viaje Service
+  # Viaje Service
   viaje-service:
     build:
       context: ./viaje-service
@@ -134,5 +134,98 @@ services:
     networks:
       - spring-cloud-net
 
+
+  # Mantenimiento Service
+  mantenimiento-service:
+    build:
+      context: ./mantenimiento-service
+    container_name: mantenimiento-service
+    ports:
+      - "8085:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - mantenimiento-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mantenimiento-db:3306/mantenimiento_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+  # Base de datos MySQL para mantenimiento-service
+  mantenimiento-db:
+    image: mysql:8.0
+    container_name: mantenimiento-db
+    ports:
+      - "3309:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: mantenimiento_db
+    networks:
+      - spring-cloud-net
+
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8086:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - auth-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://auth-db:3306/auth_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+  # Base de datos MySQL para auth-service
+  auth-db:
+    image: mysql:8.0
+    container_name: auth-db
+    ports:
+      - "3310:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: auth_db
+    networks:
+      - spring-cloud-net
+
+
+  # Admin Service
+  admin-service:
+    build:
+      context: ./admin-service
+    container_name: admin-service
+    ports:
+      - "8087:8080"
+    networks:
+      - spring-cloud-net
+    depends_on:
+      - admin-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://admin-db:3306/admin_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
+
+  # Base de datos MySQL para auth-service
+  admin-db:
+    image: mysql:8.0
+    container_name: admin-db
+    ports:
+      - "3311:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: admin_db
+    networks:
+      - spring-cloud-net
+      
 networks:
   spring-cloud-net:

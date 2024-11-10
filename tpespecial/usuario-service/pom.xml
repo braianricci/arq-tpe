@@ -19,7 +19,7 @@
 	</properties>
 	
 
-	<!-- usuario-service -->
+	<!-- Usuario-Service -->
 	<dependencies>
 
 		<!-- JPA -->

@@ -9,7 +9,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.example</groupId>
 	<artifactId>parada-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>parada-service</name>
@@ -19,7 +18,9 @@
 		<java.version>17</java.version>
 	</properties>
 
+	<!-- Parada-Service -->
 	<dependencies>
+
 		<!-- Web -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -31,6 +32,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

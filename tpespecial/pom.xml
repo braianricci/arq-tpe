@@ -31,6 +31,9 @@
 		<module>monopatin-service</module>
 		<module>viaje-service</module>
 		<module>parada-service</module>
+		<module>mantenimiento-service</module>
+		<module>auth-service</module>
+		<module>admin-service</module>
 		
 	</modules>
 
