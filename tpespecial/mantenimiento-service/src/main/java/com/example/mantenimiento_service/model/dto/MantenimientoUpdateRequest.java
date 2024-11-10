@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.example.mantenimiento_service.model.entity.Mantenimiento.EstadoMantenimiento;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 
 public class MantenimientoUpdateRequest {
 
-    private LocalDateTime fechaFin;
+    private LocalDate fechaFin;
     private EstadoMantenimiento estado;
 }

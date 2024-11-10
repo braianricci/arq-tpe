@@ -7,7 +7,6 @@ import com.example.mantenimiento_service.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +19,8 @@ public class MatenimientoServiceImpl implements MantenimientoService {
 
     @Override
     public List<MantenimientoResponse> getAllMantenimientos() {
-        List<Mantenimiento> viajes = mantenimientoRepository.findAll();
-        return viajes.stream().map(this::convertToDto).toList();
+        List<Mantenimiento> mantenimiento = mantenimientoRepository.findAll();
+        return mantenimiento.stream().map(this::convertToDto).toList();
     }
 
     @Override
@@ -33,10 +32,7 @@ public class MatenimientoServiceImpl implements MantenimientoService {
 
     @Override
     public MantenimientoResponse addMantenimiento(MantenimientoCreateRequest mantenimientoRequest) {
-        Mantenimiento mantenimiento = new Mantenimiento();
-        mantenimiento.setIdMonopatin(mantenimientoRequest.getMonopatinId());
-        mantenimiento.setFechaInicio(LocalDateTime.now());
-        mantenimiento.setEstado(mantenimientoRequest.getEstado());
+        Mantenimiento mantenimiento = new Mantenimiento(mantenimientoRequest.getMonopatinId());
         mantenimientoRepository.save(mantenimiento);
         return convertToDto(mantenimiento);
     }
