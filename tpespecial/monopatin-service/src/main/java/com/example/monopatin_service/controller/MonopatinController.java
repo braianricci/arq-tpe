@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.example.monopatin_service.model.dto.*;
-
 import com.example.monopatin_service.service.MonopatinService;
 
 @RestController
@@ -73,5 +72,12 @@ public class MonopatinController {
         return ResponseEntity.ok().build();
     }
 
+    //Como encargado de mantenimiento quiero poder generar un reporte de uso de monopatines por
+    //kilómetros para establecer si un monopatín requiere de mantenimiento.
+    @GetMapping("/uso-por-kilometros")
+    public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros() {
+        List<ReporteKilometrosDTO> reporte = monopatinService.obtenerUsoPorKilometros();
+        return ResponseEntity.ok(reporte);
+    }
 }
 

@@ -1,4 +1,4 @@
-package com.example.monopatin_service.model.dto.reportes;
+package com.example.monopatin_service.model.dto;
 
 import java.math.BigDecimal;
 

@@ -15,4 +15,5 @@ public interface MonopatinService {
     List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(Double latitud, Double longitud, Double radio); //COMUNICACION ENTRE 2 MICROSERVICIOS
     void marcarEnMantenimiento(String id);
     void marcarDisponible(String id);
+    List<ReporteKilometrosDTO> obtenerUsoPorKilometros();
 }

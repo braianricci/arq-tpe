@@ -26,10 +26,12 @@ public class Viaje {
 
     private Long usuarioId;
     private Long monopatinId;
+    
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaInicio;
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaFin;
+
     private BigDecimal kilometrosRecorridos;
     private EstadoViaje estado;
     private Long paradaInicioId;

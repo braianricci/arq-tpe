@@ -112,4 +112,11 @@ public class MonopatinServiceImpl implements MonopatinService {
         }
     }
 
+    @Override
+    public List<ReporteKilometrosDTO> obtenerUsoPorKilometros() {
+        return monopatinRepository.findAll().stream()
+                .map(m -> new ReporteKilometrosDTO(m.getId(), m.getModelo(), m.getKilometrajeTotal()))
+                .collect(Collectors.toList());
+    }
+
 }
