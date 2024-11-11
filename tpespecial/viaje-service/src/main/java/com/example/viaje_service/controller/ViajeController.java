@@ -52,4 +52,13 @@ public class ViajeController {
         return ResponseEntity.noContent().build();
     }
 
+    //REQUERIMIENTOS DEL ENUNCIADO
+    // Endpoint para obtener monopatines con más de X viajes en un cierto año
+    @GetMapping("/monopatines-con-mas-viajes")
+    public ResponseEntity<List<String>> obtenerMonopatinesConMasViajes(
+            @RequestParam int viajesMinimos,
+            @RequestParam int anio) {
+        List<String> monopatines = viajeService.obtenerMonopatinesConMasViajes(viajesMinimos, anio);
+        return ResponseEntity.ok(monopatines);
+    }
 }

@@ -61,10 +61,10 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
     @Override
-    public void anularCuenta(Long id) {
+    public void cambiarEstadoCuenta(Long id, boolean habilitada) {
         Cuenta cuenta = cuentaRepository.findById(id).orElse(null);
         if(cuenta != null){
-            cuenta.setHabilitada(false);
+            cuenta.setHabilitada(habilitada);
         }
     }
  

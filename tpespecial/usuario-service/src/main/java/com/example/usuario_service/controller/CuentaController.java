@@ -46,9 +46,12 @@ public class CuentaController {
 
     // REQUERIMIENTOS ENUNCIADO
 
-    @PutMapping("/{id}/anular")
-    public ResponseEntity<Void> anularCuenta(@PathVariable Long id) {
-        cuentaService.anularCuenta(id);
-        return ResponseEntity.ok().build();
+    // Endpoint para habilitar o anular una cuenta
+    @PatchMapping("/{id}/cambiar-estado")
+    public ResponseEntity<String> cambiarEstadoCuenta(@PathVariable Long id, @RequestParam boolean habilitada) {
+        cuentaService.cambiarEstadoCuenta(id, habilitada);
+        String mensaje = habilitada ? "Cuenta habilitada exitosamente" : "Cuenta anulada exitosamente";
+        return ResponseEntity.ok(mensaje);
     }
+
 }

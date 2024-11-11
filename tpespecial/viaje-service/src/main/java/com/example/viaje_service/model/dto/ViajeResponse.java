@@ -15,7 +15,7 @@ import com.example.viaje_service.model.entity.Viaje.EstadoViaje;
 public class ViajeResponse {
     private Long id;                       
     private Long usuarioId;                
-    private Long monopatinId;                
+    private String monopatinId;                
     private LocalDateTime fechaInicio;       
     private LocalDateTime fechaFin;         
     private BigDecimal kilometrosRecorridos; 

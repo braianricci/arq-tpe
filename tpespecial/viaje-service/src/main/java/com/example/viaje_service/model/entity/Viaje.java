@@ -25,7 +25,7 @@ public class Viaje {
     private Long id;
 
     private Long usuarioId;
-    private Long monopatinId;
+    private String monopatinId;
     
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaInicio;
@@ -43,7 +43,7 @@ public class Viaje {
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaPausaFin;
 
-    public Viaje(Long usuario_id, Long monopatin_id, Long paradaInicioId, BigDecimal tarifaAplicada) {
+    public Viaje(Long usuario_id, String monopatin_id, Long paradaInicioId, BigDecimal tarifaAplicada) {
         this.usuarioId = usuario_id;
         this.monopatinId = monopatin_id;
         this.paradaInicioId = paradaInicioId;

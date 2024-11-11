@@ -60,7 +60,6 @@ public class ViajeServiceImpl implements ViajeService {
         viajeRepository.deleteById(id);
     }
 
-    
     // Método auxiliar para convertir entidad a DTO
     private ViajeResponse convertToDto(Viaje viaje) {
         return new ViajeResponse(
@@ -73,7 +72,11 @@ public class ViajeServiceImpl implements ViajeService {
                 viaje.getParadaInicioId(),
                 viaje.getParadaFinId(),
                 viaje.getEstado(),
-                viaje.getTarifaAplicada()
-        );
+                viaje.getTarifaAplicada());
+    }
+
+    @Override
+    public List<String> obtenerMonopatinesConMasViajes(int viajesMinimos, int anio) {
+        return viajeRepository.obtenerMonopatinesConMasViajes(viajesMinimos, anio);
     }
 }

@@ -18,4 +18,5 @@ public interface ViajeService {
 
     void deleteViaje(Long id);
 
+    List<String> obtenerMonopatinesConMasViajes(int viajesMinimos, int anio);
 }

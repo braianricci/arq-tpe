@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ViajeCreateRequest {
     private Long usuarioId;  
-    private Long monopatinId;    
+    private String monopatinId;    
     private LocalDateTime fechaInicio;
     private BigDecimal tarifaAplicada;
 }
