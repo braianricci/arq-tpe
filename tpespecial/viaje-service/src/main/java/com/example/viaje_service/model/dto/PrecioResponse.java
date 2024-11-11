@@ -1,6 +1,5 @@
 package com.example.viaje_service.model.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -10,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AjustePreciosDTO {
+public class PrecioResponse {
 
-    private BigDecimal nuevaTarifaNormal;
-    private BigDecimal nuevaTarifaPausaExtendida;
+    private Double nuevaTarifaNormal;
+    private Double nuevaTarifaPausaExtendida;
     private LocalDate fechaEfectiva;
 }

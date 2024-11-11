@@ -24,13 +24,4 @@ public class ViajeResponse {
     private Long paradaFinId;
     private EstadoViaje estado;
     private Precio precioAplicado;
-
-    // metodos auxiliares
-    public BigDecimal getTarifaNormal() {
-        return precioAplicado != null ? precioAplicado.getTarifaNormal() : BigDecimal.ZERO;
-    }
-
-    public BigDecimal getTarifaPausaExtendida() {
-        return precioAplicado != null ? precioAplicado.getTarifaPausaExtendida() : BigDecimal.ZERO;
-    }
 }

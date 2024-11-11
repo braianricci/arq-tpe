@@ -55,21 +55,20 @@ public class ViajeController {
 
     // REQUERIMIENTOS DEL ENUNCIADO
     // Endpoint para obtener monopatines con más de X viajes en un cierto año
-    @GetMapping("/monopatines-con-mas-viajes")
+    @PostMapping("/monopatines-con-mas-viajes")
     public ResponseEntity<List<String>> obtenerMonopatinesConMasViajes(
-            @RequestParam(name = "viajes-minimos") int viajesMinimos,
-            @RequestParam int anio) {
-        List<String> monopatines = viajeService.obtenerMonopatinesConMasViajes(viajesMinimos, anio);
+            @RequestBody MonopatinesConMasViajesRequest request) {
+        List<String> monopatines = viajeService.obtenerMonopatinesConMasViajes(
+                request.getViajesMinimos(), request.getAnio());
         return ResponseEntity.ok(monopatines);
     }
 
     // Endpoint para obtener total facturado en rango de meses de un año
-    @GetMapping("/total-facturado")
+    @PostMapping("/total-facturado")
     public ResponseEntity<BigDecimal> obtenerTotalFacturadoPorRangoDeMesesEnAnio(
-            @RequestParam int anio,
-            @RequestParam(name = "desde-mes") int desdeMes,
-            @RequestParam(name = "hasta-mes") int hastaMes) {
-        BigDecimal total = viajeService.obtenerTotalFacturadoPorRangoDeMesesEnAnio(anio, desdeMes, hastaMes);
+            @RequestBody TotalFacturadoRequest request) {
+        BigDecimal total = viajeService.obtenerTotalFacturadoPorRangoDeMesesEnAnio(
+                request.getAnio(), request.getDesdeMes(), request.getHastaMes());
         return ResponseEntity.ok(total);
     }
 
@@ -78,8 +77,8 @@ public class ViajeController {
     // A partir de ahora, antes de agregar un viaje es necesario que exista un
     // precio con fecha efectiva anterior a la del viaje
     @PostMapping("/ajustar-precios")
-    public ResponseEntity<String> ajustarPrecios(@RequestBody AjustePreciosDTO request) {
-        viajeService.ajustarPrecios(request);
-        return ResponseEntity.ok("Precio ajustado con éxito para la fecha especificada.");
+    public ResponseEntity<PrecioResponse> ajustarPrecios(@RequestBody AjustePreciosRequest request) {
+        PrecioResponse precioResponse = viajeService.ajustarPrecios(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(precioResponse);
     }
 }

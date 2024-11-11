@@ -26,7 +26,7 @@ public interface ViajeService {
 
     BigDecimal obtenerTotalFacturadoPorRangoDeMesesEnAnio(int year, int startMonth, int endMonth);
 
-    void ajustarPrecios(AjustePreciosDTO request);
+    PrecioResponse ajustarPrecios(AjustePreciosRequest request);
 
     Precio calcularPrecio(Viaje viaje);
 }

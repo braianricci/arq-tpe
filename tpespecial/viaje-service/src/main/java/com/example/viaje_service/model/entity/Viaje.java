@@ -77,5 +77,4 @@ public class Viaje {
         NORMAL,
         PAUSA_EXTENDIDA
     }
-
 }

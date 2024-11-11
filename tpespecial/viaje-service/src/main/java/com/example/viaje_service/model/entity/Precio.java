@@ -1,6 +1,5 @@
 package com.example.viaje_service.model.entity;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -22,7 +21,13 @@ public class Precio {
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    private BigDecimal tarifaNormal;
-    private BigDecimal tarifaPausaExtendida;
+    private Double tarifaNormal;
+    private Double tarifaPausaExtendida;
     private LocalDate fechaEfectiva;
+
+    public Precio(Double tarifaNormal, Double tarifaPausaExtendida, LocalDate fechaEfectiva) {
+        this.tarifaNormal = tarifaNormal;
+        this.tarifaPausaExtendida = tarifaPausaExtendida;
+        this.fechaEfectiva = fechaEfectiva;
+    }
 }

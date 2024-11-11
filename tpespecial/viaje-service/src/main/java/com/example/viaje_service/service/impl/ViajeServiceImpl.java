@@ -94,13 +94,18 @@ public class ViajeServiceImpl implements ViajeService {
     }
 
     @Override
-    public void ajustarPrecios(AjustePreciosDTO request) {
+    public PrecioResponse ajustarPrecios(AjustePreciosRequest request) {
 
-        Precio precio = new Precio();
-        precio.setTarifaNormal(request.getNuevaTarifaNormal());
-        precio.setTarifaPausaExtendida(request.getNuevaTarifaPausaExtendida());
-        precio.setFechaEfectiva(request.getFechaEfectiva());
+        Precio precio = new Precio(
+                request.getNuevaTarifaNormal(),
+                request.getNuevaTarifaPausaExtendida(),
+                request.getFechaEfectiva());
         precioRepository.save(precio);
+
+        return new PrecioResponse(
+                precio.getTarifaNormal(),
+                precio.getTarifaPausaExtendida(),
+                precio.getFechaEfectiva());
     }
 
     @Override
