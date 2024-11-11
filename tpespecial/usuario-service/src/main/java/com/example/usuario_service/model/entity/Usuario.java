@@ -30,15 +30,22 @@ public class Usuario {
 
     @Column(unique = true, nullable = false)
     private String email;
+    
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private String telefono;
+
+    @Column(nullable = false)
+    private Rol rol;
 
     public Usuario(String nombre, String apellido, String email, String telefono) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.telefono = telefono;
+        this.rol = Rol.USUARIO;
     }
 
     public void asociarCuenta(Cuenta cuenta) {
@@ -46,4 +53,9 @@ public class Usuario {
             this.cuentas.add(cuenta);
     }
 
+    public enum Rol {
+        USUARIO,
+        MANTENIMIENTO,
+        ADMIN
+    }
 }

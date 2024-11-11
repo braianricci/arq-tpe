@@ -59,7 +59,7 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
     }
 
-    //g. "Como usuario quiero lun listado de los monopatines cercanos a mi zona, para poder encontrar un monopatín cerca de mi ubicación"
+    //g.Fue prueba para la comunicacion entre 2 microservicios utilizando client OpenFeign
     @GetMapping("/monopatines/cercanos/{latitud}/{longitud}/{radio}")
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(@PathVariable Double latitud, @PathVariable double longitud, @PathVariable double radio) {
         // Llamar al microservicio de Monopatines para obtener los cercanos
