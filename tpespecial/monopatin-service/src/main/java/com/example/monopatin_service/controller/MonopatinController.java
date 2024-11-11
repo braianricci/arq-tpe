@@ -45,7 +45,7 @@ public class MonopatinController {
         monopatinService.deleteMonopatin(id);
     }
 
-    //g.
+    // g.
     @GetMapping("/cercanos/{latitud}/{longitud}/{radio}")
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(
             @PathVariable Double latitud,
@@ -54,10 +54,9 @@ public class MonopatinController {
         return monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
     }
 
-
     // REQUERIMIENTOS ENUNCIADO
 
-    //Registrar monopatín en mantenimiento
+    // Registrar monopatín en mantenimiento
 
     @PutMapping("/{id}/mantenimiento")
     public ResponseEntity<Void> registrarMantenimiento(@PathVariable String id) {
@@ -65,19 +64,31 @@ public class MonopatinController {
         return ResponseEntity.ok().build();
     }
 
-    //Registrar fin de mantenimiento
+    // Registrar fin de mantenimiento
     @PutMapping("/{id}/fin-mantenimiento")
     public ResponseEntity<Void> finalizarMantenimiento(@PathVariable String id) {
         monopatinService.marcarDisponible(id);
         return ResponseEntity.ok().build();
     }
 
-    //Como encargado de mantenimiento quiero poder generar un reporte de uso de monopatines por
-    //kilómetros para establecer si un monopatín requiere de mantenimiento.
+    // Endpoing para consultar reporte de uso de monopatines por kilómetros para
+    // establecer si un monopatín requiere de mantenimiento.
     @GetMapping("/uso-por-kilometros")
     public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros() {
         List<ReporteKilometrosDTO> reporte = monopatinService.obtenerUsoPorKilometros();
         return ResponseEntity.ok(reporte);
     }
-}
 
+    // Endpoing para consultar la cantidad de monopatines en operacion vs cantidad
+    // en mantenimiento
+    @GetMapping("/total-en-operacion-y-mantenimiento")
+    public ResponseEntity<MonopatinesOperacionMantenimientoDTO> obtenerMonopatinesEnOperacionYMantenimiento() {
+        int enOperacion = monopatinService.obtenerCantidadMonopatinesEnOperacion();
+        int enMantenimiento = monopatinService.obtenerCantidadMonopatinesEnMantenimiento();
+
+        MonopatinesOperacionMantenimientoDTO response = new MonopatinesOperacionMantenimientoDTO(
+                enOperacion,
+                enMantenimiento);
+        return ResponseEntity.ok(response);
+    }
+}

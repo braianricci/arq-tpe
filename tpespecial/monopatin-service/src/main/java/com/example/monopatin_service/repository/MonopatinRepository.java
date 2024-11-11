@@ -8,12 +8,13 @@ import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.example.monopatin_service.model.entity.Monopatin;
+import com.example.monopatin_service.model.entity.Monopatin.EstadoMonopatin;
 
-
-public interface MonopatinRepository extends MongoRepository<Monopatin, String>{
+public interface MonopatinRepository extends MongoRepository<Monopatin, String> {
 
     Optional<Monopatin> findByModelo(String modelo);
 
     List<Monopatin> findByUbicacionNear(Point punto, Distance distancia);
 
+    int countByEstado(EstadoMonopatin estado);
 }

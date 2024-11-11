@@ -1,13 +1,17 @@
 package com.example.viaje_service.service.impl;
 
 import com.example.viaje_service.model.dto.*;
+import com.example.viaje_service.model.entity.Precio;
 import com.example.viaje_service.model.entity.Viaje;
 import com.example.viaje_service.model.entity.Viaje.EstadoViaje;
+import com.example.viaje_service.repository.PrecioRepository;
 import com.example.viaje_service.repository.ViajeRepository;
 import com.example.viaje_service.service.ViajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +20,8 @@ public class ViajeServiceImpl implements ViajeService {
 
     @Autowired
     private ViajeRepository viajeRepository;
+    @Autowired
+    private PrecioRepository precioRepository;
 
     // CRUD Básico
 
@@ -37,9 +43,11 @@ public class ViajeServiceImpl implements ViajeService {
         Viaje viaje = new Viaje();
         viaje.setUsuarioId(viajeRequest.getUsuarioId());
         viaje.setMonopatinId(viajeRequest.getMonopatinId());
-        viaje.setTarifaAplicada(viajeRequest.getTarifaAplicada());
         viaje.setFechaInicio(LocalDateTime.now());
         viaje.setEstado(EstadoViaje.ACTIVO);
+
+        viaje.setPrecioAplicado(calcularPrecio(viaje));
+
         viajeRepository.save(viaje);
         return convertToDto(viaje);
     }
@@ -49,9 +57,9 @@ public class ViajeServiceImpl implements ViajeService {
         Viaje viaje = viajeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
         viaje.setKilometrosRecorridos(viajeRequest.getKilometrosRecorridos());
-        viaje.setTarifaAplicada(viajeRequest.getTarifaAplicada());
         viaje.setFechaFin(viajeRequest.getFechaFin());
         viaje.setEstado(viajeRequest.getEstado());
+        viaje.setPrecioAplicado(calcularPrecio(viaje));
         viajeRepository.save(viaje);
     }
 
@@ -72,11 +80,33 @@ public class ViajeServiceImpl implements ViajeService {
                 viaje.getParadaInicioId(),
                 viaje.getParadaFinId(),
                 viaje.getEstado(),
-                viaje.getTarifaAplicada());
+                viaje.getPrecioAplicado());
     }
 
     @Override
     public List<String> obtenerMonopatinesConMasViajes(int viajesMinimos, int anio) {
         return viajeRepository.obtenerMonopatinesConMasViajes(viajesMinimos, anio);
+    }
+
+    @Override
+    public BigDecimal obtenerTotalFacturadoPorRangoDeMesesEnAnio(int anio, int desdeMes, int hastaMes) {
+        return viajeRepository.obtenerTotalFacturadoPorRangoDeMesesEnAnio(anio, desdeMes, hastaMes);
+    }
+
+    @Override
+    public void ajustarPrecios(AjustePreciosDTO request) {
+
+        Precio precio = new Precio();
+        precio.setTarifaNormal(request.getNuevaTarifaNormal());
+        precio.setTarifaPausaExtendida(request.getNuevaTarifaPausaExtendida());
+        precio.setFechaEfectiva(request.getFechaEfectiva());
+        precioRepository.save(precio);
+    }
+
+    @Override
+    public Precio calcularPrecio(Viaje viaje) {
+        LocalDate fechaViaje = viaje.getFechaInicio().toLocalDate();
+        return precioRepository.findTopByFechaEfectivaLessThanEqualOrderByFechaEfectivaDesc(fechaViaje)
+                .orElseThrow(() -> new RuntimeException("No se encontró una tarifa para la fecha especificada"));
     }
 }

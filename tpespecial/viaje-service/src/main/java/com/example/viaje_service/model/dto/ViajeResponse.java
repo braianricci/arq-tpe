@@ -8,19 +8,29 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.example.viaje_service.model.entity.Viaje.EstadoViaje;
+import com.example.viaje_service.model.entity.Precio;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ViajeResponse {
-    private Long id;                       
-    private Long usuarioId;                
-    private String monopatinId;                
-    private LocalDateTime fechaInicio;       
-    private LocalDateTime fechaFin;         
-    private BigDecimal kilometrosRecorridos; 
+    private Long id;
+    private Long usuarioId;
+    private String monopatinId;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
+    private BigDecimal kilometrosRecorridos;
     private Long paradaInicioId;
     private Long paradaFinId;
-    private EstadoViaje estado;                   
-    private BigDecimal tarifaAplicada;       
+    private EstadoViaje estado;
+    private Precio precioAplicado;
+
+    // metodos auxiliares
+    public BigDecimal getTarifaNormal() {
+        return precioAplicado != null ? precioAplicado.getTarifaNormal() : BigDecimal.ZERO;
+    }
+
+    public BigDecimal getTarifaPausaExtendida() {
+        return precioAplicado != null ? precioAplicado.getTarifaPausaExtendida() : BigDecimal.ZERO;
+    }
 }

@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +28,7 @@ public class Viaje {
 
     private Long usuarioId;
     private String monopatinId;
-    
+
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaInicio;
     @Column(columnDefinition = "DATETIME")
@@ -36,18 +38,20 @@ public class Viaje {
     private EstadoViaje estado;
     private Long paradaInicioId;
     private Long paradaFinId;
-    private BigDecimal tarifaAplicada;
     private TipoTarifa tipoTarifa;
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaPausaInicio;
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaPausaFin;
+    @ManyToOne
+    @JoinColumn(name = "precio_id")
+    private Precio precioAplicado;
 
-    public Viaje(Long usuario_id, String monopatin_id, Long paradaInicioId, BigDecimal tarifaAplicada) {
+    public Viaje(Long usuario_id, String monopatin_id, Long paradaInicioId, Precio precioAplicado) {
         this.usuarioId = usuario_id;
         this.monopatinId = monopatin_id;
         this.paradaInicioId = paradaInicioId;
-        this.tarifaAplicada = tarifaAplicada;
+        this.precioAplicado = precioAplicado;
         this.fechaInicio = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         this.estado = EstadoViaje.ACTIVO;
         this.kilometrosRecorridos = BigDecimal.ZERO;

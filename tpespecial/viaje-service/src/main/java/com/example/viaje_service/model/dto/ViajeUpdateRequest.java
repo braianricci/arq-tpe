@@ -16,7 +16,5 @@ public class ViajeUpdateRequest {
 
     private LocalDateTime fechaFin;
     private BigDecimal kilometrosRecorridos;
-    private EstadoViaje estado; 
-    private BigDecimal tarifaAplicada;
-
+    private EstadoViaje estado;
 }

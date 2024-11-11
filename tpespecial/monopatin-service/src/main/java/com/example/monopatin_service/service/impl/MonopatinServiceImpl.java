@@ -29,7 +29,8 @@ public class MonopatinServiceImpl implements MonopatinService {
     public List<MonopatinResponse> getAllMonopatines() {
         List<Monopatin> monopatines = monopatinRepository.findAll();
         return monopatines.stream()
-                .map(m -> new MonopatinResponse(m.getId() ,m.getModelo(), m.getEstado(), m.getUbicacion(), m.getKilometrajeTotal(),
+                .map(m -> new MonopatinResponse(m.getId(), m.getModelo(), m.getEstado(), m.getUbicacion(),
+                        m.getKilometrajeTotal(),
                         m.getTiempoUsoTotal(), m.getUltimoMantenimiento()))
                 .collect(Collectors.toList());
     }
@@ -81,10 +82,11 @@ public class MonopatinServiceImpl implements MonopatinService {
 
     @Override
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(Double longitud, Double altitud, Double radio) {
-        //Pasar de una ubicacion (x,y) a Point
+        // Pasar de una ubicacion (x,y) a Point
         Point ubicacion = new Point(longitud, altitud);
         // Crear la distancia con el radio en kilómetros
-        Distance distancia = new Distance(radio, Metrics.KILOMETERS); // El radio debe estar en la unidad correspondiente (por ejemplo, kilómetros)
+        Distance distancia = new Distance(radio, Metrics.KILOMETERS); // El radio debe estar en la unidad
+                                                                      // correspondiente (por ejemplo, kilómetros)
 
         List<Monopatin> monopatines = monopatinRepository.findByUbicacionNear(ubicacion, distancia);
 
@@ -93,13 +95,13 @@ public class MonopatinServiceImpl implements MonopatinService {
 
     // Método para convertir de entidad a DTO
     private MonopatinesCercanosDTO convertiCercanosDTO(Monopatin monopatin) {
-        return new MonopatinesCercanosDTO(monopatin.getId(),monopatin.getUbicacion());
+        return new MonopatinesCercanosDTO(monopatin.getId(), monopatin.getUbicacion());
     }
 
     @Override
     public void marcarEnMantenimiento(String id) {
         Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
-        if(monopatin != null){
+        if (monopatin != null) {
             monopatin.setEstado(EstadoMonopatin.EN_MANTENIMIENTO);
         }
     }
@@ -107,7 +109,7 @@ public class MonopatinServiceImpl implements MonopatinService {
     @Override
     public void marcarDisponible(String id) {
         Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
-        if(monopatin != null){
+        if (monopatin != null) {
             monopatin.setEstado(EstadoMonopatin.DISPONIBLE);
         }
     }
@@ -119,4 +121,14 @@ public class MonopatinServiceImpl implements MonopatinService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int obtenerCantidadMonopatinesEnOperacion() {
+        return monopatinRepository.countByEstado(EstadoMonopatin.DISPONIBLE) +
+                monopatinRepository.countByEstado(EstadoMonopatin.EN_USO);
+    }
+
+    @Override
+    public int obtenerCantidadMonopatinesEnMantenimiento() {
+        return monopatinRepository.countByEstado(EstadoMonopatin.EN_MANTENIMIENTO);
+    }
 }
