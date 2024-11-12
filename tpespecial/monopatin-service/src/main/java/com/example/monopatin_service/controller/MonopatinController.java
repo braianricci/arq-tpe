@@ -74,8 +74,9 @@ public class MonopatinController {
     // Endpoing para consultar reporte de uso de monopatines por kilómetros para
     // establecer si un monopatín requiere de mantenimiento.
     @GetMapping("/uso-por-kilometros")
-    public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros() {
-        List<ReporteKilometrosDTO> reporte = monopatinService.obtenerUsoPorKilometros();
+    public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros(
+            @RequestBody IncluirTiempoEnPausaRequest request) {
+        List<ReporteKilometrosDTO> reporte = monopatinService.obtenerUsoPorKilometros(request.isIncluirTiempo());
         return ResponseEntity.ok(reporte);
     }
 

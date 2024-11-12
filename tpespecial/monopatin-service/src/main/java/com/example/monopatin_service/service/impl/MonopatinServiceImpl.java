@@ -115,10 +115,17 @@ public class MonopatinServiceImpl implements MonopatinService {
     }
 
     @Override
-    public List<ReporteKilometrosDTO> obtenerUsoPorKilometros() {
-        return monopatinRepository.findAll().stream()
-                .map(m -> new ReporteKilometrosDTO(m.getId(), m.getModelo(), m.getKilometrajeTotal()))
-                .collect(Collectors.toList());
+    public List<ReporteKilometrosDTO> obtenerUsoPorKilometros(boolean incluirTiempo) {
+        if (incluirTiempo) {
+            return monopatinRepository.findAll().stream()
+                    .map(m -> new ReporteKilometrosDTO(m.getId(), m.getModelo(), m.getKilometrajeTotal(),
+                            m.getTiempoEnPausa()))
+                    .collect(Collectors.toList());
+        } else {
+            return monopatinRepository.findAll().stream()
+                    .map(m -> new ReporteKilometrosDTO(m.getId(), m.getModelo(), m.getKilometrajeTotal()))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override

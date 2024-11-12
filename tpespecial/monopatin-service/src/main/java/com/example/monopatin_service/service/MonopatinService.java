@@ -23,7 +23,7 @@ public interface MonopatinService {
 
     void marcarDisponible(String id);
 
-    List<ReporteKilometrosDTO> obtenerUsoPorKilometros();
+    List<ReporteKilometrosDTO> obtenerUsoPorKilometros(boolean incluirTiempo);
 
     int obtenerCantidadMonopatinesEnOperacion();
 

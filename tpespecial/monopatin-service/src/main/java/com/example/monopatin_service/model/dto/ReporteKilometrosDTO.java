@@ -13,4 +13,11 @@ public class ReporteKilometrosDTO {
     private String monopatinId;
     private String modelo;
     private BigDecimal kilometrajeTotal;
+    private Integer tiempoEnPausa;
+
+    public ReporteKilometrosDTO(String monopatinId, String modelo, BigDecimal kilometrajeTotal) {
+        this.monopatinId = monopatinId;
+        this.modelo = modelo;
+        this.kilometrajeTotal = kilometrajeTotal;
+    }
 }
