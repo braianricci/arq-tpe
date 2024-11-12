@@ -51,11 +51,11 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   }
   ```
 
-  ### B. Cuentas - Cambiar Estado
-  - **Endpoint:** `/cuentas/{id}/cambiar-estado`
-  - **Método:** `POST`
-  - **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
-  - **Body de ejemplo:**
+### B. Cuentas - Cambiar Estado
+- **Endpoint:** `/cuentas/{id}/cambiar-estado`
+- **Método:** `POST`
+- **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
+- **Body de ejemplo:**
     
   ```json
   {
@@ -63,11 +63,11 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   }
   ```
   
-  ### C. Viajes - Monopatines con Más Viajes
-  - **Endpoint:** `/viajes/monopatines-con-mas-viajes`
-  - **Método:** `GET`
-  - **Descripcion:** Devuelve una lista de monopatines que han realizado más viajes durante un año específico y que superan un número mínimo de viajes.
-  - **Body de Ejemplo:**
+### C. Viajes - Monopatines con Más Viajes
+- **Endpoint:** `/viajes/monopatines-con-mas-viajes`
+- **Método:** `GET`
+- **Descripcion:** Devuelve una lista de monopatines que han realizado más viajes durante un año específico y que superan un número mínimo de viajes.
+- **Body de Ejemplo:**
     
     ```json
     {
@@ -76,11 +76,11 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
     }
     ```
     
-   ### D. Viajes - Total Facturado
-   - **Endpoint:** `/viajes/total-facturado`
-   - **Método:** `POST`
-   - **Descripción:** Calcula el total facturado por todos los viajes en un rango de meses dentro de un año determinado.
-   -**Body de Ejemplo:**
+### D. Viajes - Total Facturado
+- **Endpoint:** `/viajes/total-facturado`
+- **Método:** `POST`
+- **Descripción:** Calcula el total facturado por todos los viajes en un rango de meses dentro de un año determinado.
+-**Body de Ejemplo:**
      
      ```json
      {
@@ -88,30 +88,30 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
         "desdeMes": 4,
         "hastaMes": 10
      }
-      ```
+     ```
   
-    ### E. Monopatines - Total en Operación y Mantenimiento
-    - **Endpoint:** `/monopatines/total-en-operacion-y-mantenimiento`
-    - **Método:** `GET`
-    - **Descripción:** Retorna el total de monopatines que están actualmente en operación o en mantenimiento.
-    - **Body:** No requiere parámetros.
+### E. Monopatines - Total en Operación y Mantenimiento
+- **Endpoint:** `/monopatines/total-en-operacion-y-mantenimiento`
+- **Método:** `GET`
+- **Descripción:** Retorna el total de monopatines que están actualmente en operación o en mantenimiento.
+- **Body:** No requiere parámetros.
  
-    ### F. Viajes - Ajustar Precios
-    - **Endpoint:** `/viajes/ajustar-precios`
-    - **Método:** `PUT`
-    - **Descripción:** Permite ajustar las tarifas normales y de pausa extendida para los viajes, a partir de una fecha efectiva.
-    - **Body de Ejemplo:**
+### F. Viajes - Ajustar Precios
+- **Endpoint:** `/viajes/ajustar-precios`
+- **Método:** `PUT`
+- **Descripción:** Permite ajustar las tarifas normales y de pausa extendida para los viajes, a partir de una fecha efectiva.
+- **Body de Ejemplo:**
       
-        ```json    
-        {
-            "nuevaTarifaNormal": 10.5,
-            "nuevaTarifaPausaExtendida": 14.4,
-            "fechaEfectiva": "2024-12-01"
-        }
-        ```
+      ```json    
+      {
+          "nuevaTarifaNormal": 10.5,
+          "nuevaTarifaPausaExtendida": 14.4,
+          "fechaEfectiva": "2024-12-01"
+      }
+      ```
 
-    ### G. Monopatines - Buscar Cercanos
-    - **Endpoint:** `/monopatines/cercanos/{latitud}/{longitud}/{radio}`
-    - **Método:** `GET`
-    - **Descripción:** Devuelve una lista de monopatines disponibles dentro de un radio específico desde una ubicación dada (latitud y longitud).
-    - **Body:** No requiere parámetros por body, los parámetros se envían en la URL. 
+### G. Monopatines - Buscar Cercanos
+- **Endpoint:** `/monopatines/cercanos/{latitud}/{longitud}/{radio}`
+- **Método:** `GET`
+- **Descripción:** Devuelve una lista de monopatines disponibles dentro de un radio específico desde una ubicación dada (latitud y longitud).
+- **Body:** No requiere parámetros por body, los parámetros se envían en la URL. 
