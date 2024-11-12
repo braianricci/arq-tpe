@@ -111,7 +111,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
         ```
 
     ### G. Monopatines - Buscar Cercanos
-    - **Endpoint:** /cercanos/{latitud}/{longitud}/{radio}
+    - **Endpoint:** monopatines/cercanos/{latitud}/{longitud}/{radio}
     - **Método:** GET
     - **Descripción:** Devuelve una lista de monopatines disponibles dentro de un radio específico desde una ubicación dada (latitud y longitud).
     - **Body:** No requiere parámetros por body, los parámetros se envían en la URL. 
