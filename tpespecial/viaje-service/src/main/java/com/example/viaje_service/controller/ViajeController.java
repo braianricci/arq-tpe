@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/viaje")
+@RequestMapping("/viajes")
 public class ViajeController {
 
     @Autowired
@@ -54,7 +54,8 @@ public class ViajeController {
     }
 
     // REQUERIMIENTOS DEL ENUNCIADO
-    // Endpoint para obtener monopatines con más de X viajes en un cierto año
+
+    // Obtener monopatines con más de X viajes en un cierto año
     @PostMapping("/monopatines-con-mas-viajes")
     public ResponseEntity<List<String>> obtenerMonopatinesConMasViajes(
             @RequestBody MonopatinesConMasViajesRequest request) {
@@ -63,7 +64,7 @@ public class ViajeController {
         return ResponseEntity.ok(monopatines);
     }
 
-    // Endpoint para obtener total facturado en rango de meses de un año
+    // Obtener total facturado en rango de meses de un año
     @PostMapping("/total-facturado")
     public ResponseEntity<BigDecimal> obtenerTotalFacturadoPorRangoDeMesesEnAnio(
             @RequestBody TotalFacturadoRequest request) {
@@ -72,10 +73,9 @@ public class ViajeController {
         return ResponseEntity.ok(total);
     }
 
-    // Endpoint para modificar precios con una fecha a partir de la cual son
-    // efectivos
-    // A partir de ahora, antes de agregar un viaje es necesario que exista un
-    // precio con fecha efectiva anterior a la del viaje
+    // Modificar precios con una fecha a partir de la cual son
+    // efectivos. A partir de ahora, antes de agregar un viaje es necesario que exista un
+    // precio con fecha efectiva anterior a la del viaje.
     @PostMapping("/ajustar-precios")
     public ResponseEntity<PrecioResponse> ajustarPrecios(@RequestBody AjustePreciosRequest request) {
         PrecioResponse precioResponse = viajeService.ajustarPrecios(request);

@@ -10,7 +10,7 @@ import com.example.parada_service.model.dto.*;
 import com.example.parada_service.service.ParadaService;
 
 @RestController
-@RequestMapping("/parada")
+@RequestMapping("/paradas")
 public class ParadaController {
 
     @Autowired

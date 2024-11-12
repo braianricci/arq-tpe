@@ -11,47 +11,43 @@ import com.example.monopatin_service.model.dto.*;
 import com.example.monopatin_service.service.MonopatinService;
 
 @RestController
-@RequestMapping("/monopatin")
+@RequestMapping("/monopatines")
 public class MonopatinController {
 
     @Autowired
     private MonopatinService monopatinService;
 
+    // Obtener todos los monopatines
     @GetMapping
     public List<MonopatinResponse> getAllMonopatines() {
         return monopatinService.getAllMonopatines();
     }
 
+    // Obtener un monopatin por ID
     @GetMapping("/{id}")
     public MonopatinResponse getMonopatinById(@PathVariable String id) {
         return monopatinService.getMonopatinById(id);
     }
 
+    // Crear
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public void addMonopatin(@RequestBody MonopatinCreateRequest monopatin) {
         monopatinService.addMonopatin(monopatin);
     }
 
+    // Actualizar
     @PutMapping("/put/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putMonopatin(@PathVariable String id, @RequestBody MonopatinUpdateRequest monopatin) {
         monopatinService.putMonopatin(id, monopatin);
     }
 
+    // Eliminar
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMonopatin(@PathVariable String id) {
         monopatinService.deleteMonopatin(id);
-    }
-
-    // g.
-    @GetMapping("/cercanos/{latitud}/{longitud}/{radio}")
-    public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(
-            @PathVariable Double latitud,
-            @PathVariable Double longitud,
-            @PathVariable Double radio) {
-        return monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
     }
 
     // REQUERIMIENTOS ENUNCIADO
@@ -71,7 +67,7 @@ public class MonopatinController {
         return ResponseEntity.ok().build();
     }
 
-    // Endpoing para consultar reporte de uso de monopatines por kilómetros para
+    // Reporte uso de monopatines por kilómetros para
     // establecer si un monopatín requiere de mantenimiento.
     @GetMapping("/uso-por-kilometros")
     public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros(
@@ -80,7 +76,7 @@ public class MonopatinController {
         return ResponseEntity.ok(reporte);
     }
 
-    // Endpoing para consultar la cantidad de monopatines en operacion vs cantidad
+    // Consultar la cantidad de monopatines en operacion vs cantidad
     // en mantenimiento
     @GetMapping("/total-en-operacion-y-mantenimiento")
     public ResponseEntity<MonopatinesOperacionMantenimientoDTO> obtenerMonopatinesEnOperacionYMantenimiento() {
@@ -91,5 +87,15 @@ public class MonopatinController {
                 enOperacion,
                 enMantenimiento);
         return ResponseEntity.ok(response);
+    }
+
+    // 3.g.Listado de los monopatines cercanos a mi zona, para poder encontrar
+    //     un monopatín cerca de mi ubicación
+    @GetMapping("/cercanos/{latitud}/{longitud}/{radio}")
+    public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(
+            @PathVariable Double latitud,
+            @PathVariable Double longitud,
+            @PathVariable Double radio) {
+        return monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
     }
 }

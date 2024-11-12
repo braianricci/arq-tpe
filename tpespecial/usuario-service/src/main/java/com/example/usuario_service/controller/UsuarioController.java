@@ -21,7 +21,7 @@ import com.example.usuario_service.model.dto.UsuarioResponse;
 import com.example.usuario_service.service.UsuarioService;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -59,7 +59,7 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
     }
 
-    //g.Fue prueba para la comunicacion entre 2 microservicios utilizando client OpenFeign
+    // Fue una prueba para entender la comunicacion entre 2 microservicios utilizando client OpenFeign
     @GetMapping("/monopatines/cercanos/{latitud}/{longitud}/{radio}")
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(@PathVariable Double latitud, @PathVariable double longitud, @PathVariable double radio) {
         // Llamar al microservicio de Monopatines para obtener los cercanos

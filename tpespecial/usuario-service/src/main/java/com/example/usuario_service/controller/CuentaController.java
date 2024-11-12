@@ -13,7 +13,7 @@ import com.example.usuario_service.service.CuentaService;
 
 
 @RestController
-@RequestMapping("/cuenta")
+@RequestMapping("/cuentas")
 public class CuentaController {
     @Autowired
     private CuentaService cuentaService;
