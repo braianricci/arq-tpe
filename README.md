@@ -18,7 +18,7 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
 
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/braianricci/arq-tpe
+    git clone `https://github.com/braianricci/arq-tpe`
     cd tpespecial
     ```
 
@@ -52,7 +52,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   ```
 
   ### B. Cuentas - Cambiar Estado
-  - **Endpoint:** /cuentas/{id}/cambiar-estado
+  - **Endpoint:** `/cuentas/{id}/cambiar-estado`
   - **Método:** `POST`
   - **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
   - **Body de ejemplo:**
@@ -64,7 +64,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   ```
   
   ### C. Viajes - Monopatines con Más Viajes
-  - **Endpoint:** /viajes/monopatines-con-mas-viajes
+  - **Endpoint:** `/viajes/monopatines-con-mas-viajes`
   - **Método:** `POST`
   - **Descripcion:** Devuelve una lista de monopatines que han realizado más viajes durante un año específico y que superan un número mínimo de viajes.
   - **Body de Ejemplo:**
@@ -77,8 +77,8 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
     ```
     
    ### D. Viajes - Total Facturado
-   - **Endpoint:** /viajes/total-facturado
-   - **Método:** POST
+   - **Endpoint:** `/viajes/total-facturado`
+   - **Método:** `POST`
    - **Descripción:** Calcula el total facturado por todos los viajes en un rango de meses dentro de un año determinado.
    -**Body de Ejemplo:**
      
@@ -91,14 +91,14 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
       ```
   
     ### E. Monopatines - Total en Operación y Mantenimiento
-    - **Endpoint:** /monopatines/total-en-operacion-y-mantenimiento
-    - **Método:** GET
+    - **Endpoint:** `/monopatines/total-en-operacion-y-mantenimiento`
+    - **Método:** `GET`
     - **Descripción:** Retorna el total de monopatines que están actualmente en operación o en mantenimiento.
     - **Body:** No requiere parámetros.
  
     ### F. Viajes - Ajustar Precios
-    - **Endpoint:** /viajes/ajustar-precios
-    - **Método:** PUT
+    - **Endpoint:** `/viajes/ajustar-precios`
+    - **Método:** `PUT`
     - **Descripción:** Permite ajustar las tarifas normales y de pausa extendida para los viajes, a partir de una fecha efectiva.
     - **Body de Ejemplo:**
       
@@ -111,7 +111,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
         ```
 
     ### G. Monopatines - Buscar Cercanos
-    - **Endpoint:** /monopatines/cercanos/{latitud}/{longitud}/{radio}
-    - **Método:** GET
+    - **Endpoint:** `/monopatines/cercanos/{latitud}/{longitud}/{radio}`
+    - **Método:** `GET`
     - **Descripción:** Devuelve una lista de monopatines disponibles dentro de un radio específico desde una ubicación dada (latitud y longitud).
     - **Body:** No requiere parámetros por body, los parámetros se envían en la URL. 
