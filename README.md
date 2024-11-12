@@ -6,10 +6,35 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
 ## Trabajo Practico Especial Primera Entrega
 
 ### Tecnologias y arquitectura
-- Aplicacion de Microservicios en Springboot
-- Microservicios individuales desplegados con Docker
+- **Microservicios** implementados en **Spring Boot**
+- **Maven** para la gestión de dependencias y el ciclo de vida del proyecto
+- **Docker** para la contenedorización de servicios
+- **Eureka** para el registro de microservicios
+- **API Gateway** para enrutar peticiones
+- **Feign Clients** para la comunicación entre microservicios
 
-### Endpoints especiales para los servicios/reportes del punto 3
+## Cómo Ejecutar el Proyecto
+
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/braianricci/arq-tpe
+    cd tpespecial
+    ```
+
+2. Compila el proyecto con **Maven**:
+    ```bash
+    mvn clean install
+    ```
+
+3. Construye y levanta los contenedores Docker:
+    ```bash
+    docker-compose up --build
+    ```
+
+4. Accede a la aplicación en `http://localhost:8080`
+
+
+## Endpoints especiales para los servicios/reportes del punto 3
 - A:  
     **_/monopatines/uso-por-kilometros_**  
     Acepta un request body con el siguiente formato:
