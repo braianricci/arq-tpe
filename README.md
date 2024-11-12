@@ -41,7 +41,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
 
 ### A. Monopatines - Uso por Kilómetros
 - **Endpoint:** `/monopatines/uso-por-kilometros`
-- **Método:** `POST`
+- **Método:** `GET`
 - **Descripción:** Genera un reporte del uso de monopatines según los kilómetros recorridos, con opción para incluir el tiempo de uso en el reporte.
 - **Body de Ejemplo:**
   
@@ -65,7 +65,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   
   ### C. Viajes - Monopatines con Más Viajes
   - **Endpoint:** `/viajes/monopatines-con-mas-viajes`
-  - **Método:** `POST`
+  - **Método:** `GET`
   - **Descripcion:** Devuelve una lista de monopatines que han realizado más viajes durante un año específico y que superan un número mínimo de viajes.
   - **Body de Ejemplo:**
     
