@@ -52,7 +52,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
   ```
 
   ### B. Cuentas - Cambiar Estado
-  - **Endpoint:** /cuentas/{id}/cambiar-estado
+  - **Endpoint:** usuarios/cuentas/{id}/cambiar-estado
   - **Método:** `POST`
   - **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
   - **Body de ejemplo:**
@@ -111,7 +111,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
         ```
 
     ### G. Monopatines - Buscar Cercanos
-    - **Endpoint:** monopatines/cercanos/{latitud}/{longitud}/{radio}
+    - **Endpoint:** /monopatines/cercanos/{latitud}/{longitud}/{radio}
     - **Método:** GET
     - **Descripción:** Devuelve una lista de monopatines disponibles dentro de un radio específico desde una ubicación dada (latitud y longitud).
     - **Body:** No requiere parámetros por body, los parámetros se envían en la URL. 
