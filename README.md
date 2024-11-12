@@ -9,7 +9,7 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
 - **Arquitectura de Microservicios** usando **Spring Boot**
 - **Maven** para la gestión de dependencias
 - **Bases de datos**: **MySQL** (para datos relacionales) y **MongoDB** (para datos NoSQL)
-- **Docker** para la virtualizacion de servicios
+- **Docker** para la virtualizacion
 - **Eureka** para el registro de microservicios
 - **API Gateway** para enrutar peticiones
 - **Feign Clients** para la comunicación entre microservicios
