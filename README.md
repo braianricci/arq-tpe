@@ -18,7 +18,7 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
 
 1. Clona el repositorio:
     ```bash
-    git clone `https://github.com/braianricci/arq-tpe`
+    git clone https://github.com/braianricci/arq-tpe
     cd tpespecial
     ```
 
