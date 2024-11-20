@@ -75,4 +75,14 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
     }
 
+
+    @Override
+    public Optional<Usuario> login(String email, String password) {
+        // Buscar usuario por email
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+
+        // Verificar si existe y si el password coincide
+        return usuarioOpt.filter(usuario -> usuario.getPassword().equals(password));
+    }
+
 }
