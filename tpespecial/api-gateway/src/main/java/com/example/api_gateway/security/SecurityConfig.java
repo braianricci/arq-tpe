@@ -22,8 +22,9 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
+            .csrf(csrf -> csrf.disable()) 
             .authorizeExchange(exchanges -> exchanges
-                .pathMatchers("/usuarios/login").permitAll()  // Permitir acceso público al login
+                .pathMatchers("/usuarios", "/usuarios/login", "/usuarios/add").permitAll()  // Permitir acceso público a estos endpoints
                 .anyExchange().authenticated()  // Requiere autenticación en otros endpoints
             )
             .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), SecurityWebFiltersOrder.AUTHENTICATION);

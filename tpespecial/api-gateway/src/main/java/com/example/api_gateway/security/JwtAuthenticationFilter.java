@@ -21,6 +21,14 @@ public class JwtAuthenticationFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+
+        String path = exchange.getRequest().getURI().getPath();
+
+        // Omitir validación de token para los endpoints públicos
+        if (path.equals("/usuarios") || path.equals("/usuarios/login") || path.equals("/usuarios/add")) {
+            return chain.filter(exchange);  // Continuar sin validar el token
+        }
+
         String token = resolveToken(exchange.getRequest()); // Obtener el token desde los encabezados
 
         if (token != null) {

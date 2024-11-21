@@ -165,36 +165,5 @@ services:
     networks:
       - spring-cloud-net
 
-
-  # Auth Service
-  auth-service:
-    build:
-      context: ./auth-service
-    container_name: auth-service
-    ports:
-      - "8086:8080"
-    networks:
-      - spring-cloud-net
-    depends_on:
-      - auth-db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://auth-db:3306/auth_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: ""
-
-  # Base de datos MySQL para auth-service
-  auth-db:
-    image: mysql:8.0
-    container_name: auth-db
-    ports:
-      - "3310:3306"
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: auth_db
-    networks:
-      - spring-cloud-net
-      
 networks:
   spring-cloud-net:

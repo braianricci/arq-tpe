@@ -11,7 +11,7 @@ import com.example.usuario_service.model.entity.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
-    @Query("SELECT new com.example.usuario_service.model.dto.UsuarioResponse(u.id, u.nombre, u.apellido, u.email, u.telefono) FROM Usuario u")
+    @Query("SELECT new com.example.usuario_service.model.dto.UsuarioResponse(u.id, u.nombre, u.apellido, u.telefono, u.email, u.password, u.rol) FROM Usuario u")
     List<UsuarioResponse> getAllUsuarios();
 
     //Metodo usado para validar si el usuario ya existe

@@ -40,11 +40,12 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
 
-    public Usuario(String nombre, String apellido, String email, String telefono) {
+    public Usuario(String nombre, String apellido, String telefono, String email, String password) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.email = email;
         this.telefono = telefono;
+        this.email = email;
+        this.password = password;
         this.rol = Rol.USUARIO;
     }
 

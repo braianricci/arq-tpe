@@ -75,7 +75,7 @@ public class UsuarioController {
                 .map(usuario -> {
                     // Si el login es válido, generar el token JWT
                     String token = JwtUtil.generateToken(usuario.getEmail(), usuario.getRol());
-                    return ResponseEntity.ok(token);
+                    return ResponseEntity.ok("token: "+ token);
                 })
                 .orElse(ResponseEntity.status(401).body("Credenciales inválidas"));
     }

@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponse getUsuarioById(Long id){
        Usuario usuario = usuarioRepository.findById(id).orElse(null);
        if(usuario !=null){
-           return new UsuarioResponse(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(), usuario.getEmail());
+           return new UsuarioResponse(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(), usuario.getEmail(), usuario.getPassword(), usuario.getRol());
        }
        return null;
     }
@@ -48,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             // Si el usuario ya existe, lanzar una excepción
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El usuario ya existe.");
         }
-            Usuario us = new Usuario(usuariodto.getNombre(),usuariodto.getApellido(),usuariodto.getTelefono(),usuariodto.getEmail());
+            Usuario us = new Usuario(usuariodto.getNombre(),usuariodto.getApellido(),usuariodto.getTelefono(),usuariodto.getEmail(), usuariodto.getPassword());
             usuarioRepository.save(us);
     }
 
