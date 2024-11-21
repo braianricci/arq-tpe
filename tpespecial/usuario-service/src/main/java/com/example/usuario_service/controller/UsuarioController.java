@@ -20,6 +20,7 @@ import com.example.usuario_service.model.dto.LoginRequest;
 import com.example.usuario_service.model.dto.MonopatinesCercanosDTO;
 import com.example.usuario_service.model.dto.UsuarioRequest;
 import com.example.usuario_service.model.dto.UsuarioResponse;
+import com.example.usuario_service.model.dto.UsuarioUpdateRequest;
 import com.example.usuario_service.security.JwtUtil;
 import com.example.usuario_service.service.UsuarioService;
 
@@ -45,14 +46,14 @@ public class UsuarioController {
     }
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addUsuario(@RequestBody UsuarioRequest usuario) {
-        this.usuarioService.addUsuario(usuario);
+    public ResponseEntity<String> addUsuario(@RequestBody UsuarioRequest usuario) {
+        return usuarioService.addUsuario(usuario);
     }
+    
 
     @PutMapping("/put/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putUsuario(@PathVariable Long id, @RequestBody UsuarioRequest usuario) {
+    public void putUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateRequest usuario) {
         usuarioService.putUsuario(id, usuario);
     }
 
@@ -75,7 +76,7 @@ public class UsuarioController {
                 .map(usuario -> {
                     // Si el login es válido, generar el token JWT
                     String token = JwtUtil.generateToken(usuario.getEmail(), usuario.getRol());
-                    return ResponseEntity.ok("token: "+ token);
+                    return ResponseEntity.ok(token);
                 })
                 .orElse(ResponseEntity.status(401).body("Credenciales inválidas"));
     }

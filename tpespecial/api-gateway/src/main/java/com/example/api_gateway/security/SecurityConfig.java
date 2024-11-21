@@ -27,6 +27,16 @@ public class SecurityConfig {
             .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
             .authorizeExchange(exchanges -> exchanges
                 .pathMatchers("/usuarios", "/usuarios/login", "/usuarios/add").permitAll()
+
+                .pathMatchers("/monopatines/uso-por-kilometros").hasAuthority("MANTENIMIENTO")
+                .pathMatchers("/cuentas/{id}/cambiar-estado").hasAuthority("ADMIN")
+                .pathMatchers("/viajes/monopatines-con-mas-viajes").hasAuthority("ADMIN")
+                .pathMatchers("/viajes/total-facturado").hasAuthority("ADMIN")
+                .pathMatchers("/monopatines/total-en-operacion-y-mantenimiento").hasAuthority("ADMIN")
+                .pathMatchers("/viajes/ajustar-precios").hasAuthority("ADMIN")
+                .pathMatchers("/monopatines/cercanos/{latitud}/{longitud}/{radio}").hasAuthority("ADMIN")
+
+
                 .anyExchange().authenticated()
             )
             .addFilterAt(new JwtAuthenticationFilter(jwtUtil), SecurityWebFiltersOrder.AUTHENTICATION)
