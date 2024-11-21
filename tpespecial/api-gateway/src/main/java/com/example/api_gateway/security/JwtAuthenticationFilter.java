@@ -1,15 +1,17 @@
 package com.example.api_gateway.security;
 
-import io.jsonwebtoken.Claims;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
+import reactor.core.publisher.Mono;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-
-public class JwtAuthenticationFilter extends OncePerRequestFilter {
+@Component
+public class JwtAuthenticationFilter implements WebFilter {
 
     private final JwtUtil jwtUtil;
 
@@ -18,32 +20,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@SuppressWarnings("null") HttpServletRequest request, @SuppressWarnings("null") HttpServletResponse response, @SuppressWarnings("null") FilterChain filterChain)
-            throws ServletException, IOException {
-
-        String token = resolveToken(request); // Obtener token del encabezado
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        String token = resolveToken(exchange.getRequest()); // Obtener el token desde los encabezados
 
         if (token != null) {
             try {
-                Claims claims = jwtUtil.validateToken(token); // Validar el token
-                System.out.println("Token válido: " + claims.getSubject());
+                jwtUtil.validateToken(token); // Validar el token
             } catch (Exception e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
-                return; // Detener la ejecución si el token es inválido
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED); // Responder con 401 si el token es inválido
+                return exchange.getResponse().setComplete();
             }
         } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token no encontrado");
-            return;
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED); // Responder con 401 si no hay token
+            return exchange.getResponse().setComplete();
         }
 
-        filterChain.doFilter(request, response); // Continuar si el token es válido
+        return chain.filter(exchange); // Continuar con el flujo si el token es válido
     }
 
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+    private String resolveToken(ServerHttpRequest request) {
+        // Extract Authorization header
+        String bearerToken = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        
+        // Check if Authorization header exists and starts with "Bearer "
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            // Return the token part after "Bearer "
             return bearerToken.substring(7);
         }
+        
         return null;
     }
 }
