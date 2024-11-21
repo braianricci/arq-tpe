@@ -1,19 +1,30 @@
 package com.example.api_gateway.security;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import java.util.Collections;
 
 @Component
 public class JwtAuthenticationFilter implements WebFilter {
-
+    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtUtil jwtUtil;
+    
+    private static final String[] PUBLIC_PATHS = {
+        "/usuarios",
+        "/usuarios/login",
+        "/usuarios/add"
+    };
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
@@ -21,38 +32,56 @@ public class JwtAuthenticationFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-
         String path = exchange.getRequest().getURI().getPath();
+        logger.debug("Request Path: {}", path);
 
-        // Omitir validación de token para los endpoints públicos
-        if (path.equals("/usuarios") || path.equals("/usuarios/login") || path.equals("/usuarios/add")) {
-            return chain.filter(exchange);  // Continuar sin validar el token
+        if (isPublicPath(path)) {
+            logger.debug("Public endpoint accessed: {}", path);
+            return chain.filter(exchange);
         }
 
-        String token = resolveToken(exchange.getRequest()); // Obtener el token desde los encabezados
-
+        String token = resolveToken(exchange.getRequest());
+        
         if (token != null) {
             try {
-                jwtUtil.validateToken(token); // Validar el token
+                var claims = jwtUtil.validateToken(token);
+                // Crear autenticación
+                UsernamePasswordAuthenticationToken auth = 
+                    new UsernamePasswordAuthenticationToken(
+                        claims.getSubject(), 
+                        null, 
+                        Collections.emptyList()
+                    );
+
+                // Establecer el contexto de seguridad
+                return chain.filter(exchange)
+                    .contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth));
+                
             } catch (Exception e) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED); // Responder con 401 si el token es inválido
+                logger.error("Token validation failed: {}", e.getMessage());
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }
-        } else {
-            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED); // Responder con 401 si no hay token
-            return exchange.getResponse().setComplete();
         }
 
-        return chain.filter(exchange); // Continuar con el flujo si el token es válido
+        logger.debug("No token provided");
+        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+        return exchange.getResponse().setComplete();
+    }
+
+    private boolean isPublicPath(String path) {
+        for (String publicPath : PUBLIC_PATHS) {
+            if (path.equals(publicPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String resolveToken(ServerHttpRequest request) {
-        // Extract Authorization header
         String bearerToken = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         
-        // Check if Authorization header exists and starts with "Bearer "
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            // Return the token part after "Bearer "
             return bearerToken.substring(7);
         }
         
