@@ -24,7 +24,12 @@ import com.example.usuario_service.model.dto.UsuarioUpdateRequest;
 import com.example.usuario_service.security.JwtUtil;
 import com.example.usuario_service.service.UsuarioService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Usuario Controller", description = "APIs para gestionar usuarios")
 @RestController
+
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
@@ -35,28 +40,32 @@ public class UsuarioController {
     private MonopatinClient monopatinClient;
 
 
+    @Operation(summary = "Obtener todos los usuarios")
     @GetMapping
     public List<UsuarioResponse> getAllUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
+    @Operation(summary = "Obtener usuario por ID")
     @GetMapping("/{id}")
     public UsuarioResponse getUsuarioById(@PathVariable Long id) {
         return usuarioService.getUsuarioById(id);
     }
 
+    @Operation(summary = "Crear un usuario")
     @PostMapping("/add")
     public ResponseEntity<String> addUsuario(@RequestBody UsuarioRequest usuario) {
         return usuarioService.addUsuario(usuario);
     }
     
-
+    @Operation(summary = "Actualizar un usuario")
     @PutMapping("/put/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void putUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateRequest usuario) {
         usuarioService.putUsuario(id, usuario);
     }
 
+    @Operation(summary = "Eliminar un usuario")
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUsuario(@PathVariable Long id) {
@@ -64,12 +73,14 @@ public class UsuarioController {
     }
 
     // Fue una prueba para entender la comunicacion entre 2 microservicios utilizando client OpenFeign
+    @Operation(summary = "Obtener monopatines cercanos")
     @GetMapping("/monopatines/cercanos/{latitud}/{longitud}/{radio}")
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(@PathVariable Double latitud, @PathVariable double longitud, @PathVariable double radio) {
         // Llamar al microservicio de Monopatines para obtener los cercanos
         return monopatinClient.obtenerMonopatinesCercanos(latitud, longitud, radio);
     }
 
+    @Operation(summary = "Login de usuario")
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest request) {
         return usuarioService.login(request.getEmail(), request.getPassword())
