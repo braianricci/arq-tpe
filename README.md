@@ -33,7 +33,8 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
     ```
 
 4. Accede a la aplicación en `http://localhost:8080`
-
+   
+5. Para ver un ejemplo de Swagger acceder a 'http://localhost:8081/swagger-ui/index.html' (Usuario-Service)
 
 ## Endpoints Especiales
 
