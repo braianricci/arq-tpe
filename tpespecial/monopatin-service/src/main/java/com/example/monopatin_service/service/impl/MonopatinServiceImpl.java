@@ -1,7 +1,6 @@
 package com.example.monopatin_service.service.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,8 +9,8 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.monopatin_service.model.dto.*;
 import com.example.monopatin_service.model.entity.Monopatin;
@@ -52,32 +51,36 @@ public class MonopatinServiceImpl implements MonopatinService {
     }
 
     @Override
-    public void addMonopatin(MonopatinCreateRequest monopatinRequest) {
-        // Verificar si el monopatin ya existe (por modelo o algún otro criterio único,
-        // si aplica)
+    public ResponseEntity<String> addMonopatin(MonopatinCreateRequest monopatinRequest) {
+        
         Optional<Monopatin> existingMonopatin = monopatinRepository.findByModelo(monopatinRequest.getModelo());
         if (existingMonopatin.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "El monopatin ya existe.");
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El monopatin ya existe.");
         }
-
         Monopatin monopatin = new Monopatin(monopatinRequest.getModelo());
         monopatinRepository.save(monopatin);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Monopatin creado exitosamente.");
     }
 
     @Override
-    public void putMonopatin(String id, MonopatinUpdateRequest monopatinRequest) {
-        Monopatin monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Monopatin con id " + id + " no encontrado"));
-        monopatin.setUbicacion(monopatinRequest.getUbicacion());
-        monopatinRepository.save(monopatin);
+    public ResponseEntity<String> putMonopatin(String id, MonopatinUpdateRequest monopatinRequest) {
+        Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
+        if(monopatin != null){
+            monopatin.setUbicacion(monopatinRequest.getUbicacion());
+            monopatinRepository.save(monopatin);
+            return ResponseEntity.status(HttpStatus.OK).body("Monopatin actualizado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El monopatin ya existe.");
     }
 
     @Override
-    public void deleteMonopatin(String id) {
+    public ResponseEntity<String> deleteMonopatin(String id) {
         Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
         if (monopatin != null) {
-            monopatinRepository.delete(monopatin);
+            monopatinRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Monopatin eliminado exitosamente.");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El monopatin ya existe.");
     }
 
     @Override
@@ -99,19 +102,23 @@ public class MonopatinServiceImpl implements MonopatinService {
     }
 
     @Override
-    public void marcarEnMantenimiento(String id) {
+    public ResponseEntity<String> marcarEnMantenimiento(String id) {
         Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
         if (monopatin != null) {
             monopatin.setEstado(EstadoMonopatin.EN_MANTENIMIENTO);
+            return ResponseEntity.status(HttpStatus.OK).body("Monopatin puesto en mantenimiento.");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El monopatin que intenta poner en mantenimiento no existe.");
     }
 
     @Override
-    public void marcarDisponible(String id) {
+    public ResponseEntity<String> marcarDisponible(String id) {
         Monopatin monopatin = monopatinRepository.findById(id).orElse(null);
         if (monopatin != null) {
             monopatin.setEstado(EstadoMonopatin.DISPONIBLE);
+            return ResponseEntity.status(HttpStatus.OK).body("El monopatin vuelve a estar disponible.");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El monopatin que intenta poner como disponible no existe.");
     }
 
     @Override

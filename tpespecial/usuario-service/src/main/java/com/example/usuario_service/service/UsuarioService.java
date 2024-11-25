@@ -16,8 +16,8 @@ public interface UsuarioService {
     List<UsuarioResponse> getAllUsuarios();
     UsuarioResponse getUsuarioById(Long id);
     ResponseEntity<String> addUsuario(UsuarioRequest usuario);
-    void putUsuario(Long id, UsuarioUpdateRequest usuario);
-    void deleteUsuario(Long id);
+    ResponseEntity<String> putUsuario(Long id, UsuarioUpdateRequest usuario);
+    ResponseEntity<String> deleteUsuario(Long id);
     Optional<Usuario> login(String email, String password);
 
 }

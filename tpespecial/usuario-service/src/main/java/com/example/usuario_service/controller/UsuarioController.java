@@ -3,7 +3,6 @@ package com.example.usuario_service.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.usuario_service.client.MonopatinClient;
@@ -29,7 +27,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "Usuario Controller", description = "APIs para gestionar usuarios")
 @RestController
-
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
@@ -60,17 +57,17 @@ public class UsuarioController {
     
     @Operation(summary = "Actualizar un usuario")
     @PutMapping("/put/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateRequest usuario) {
-        usuarioService.putUsuario(id, usuario);
+    public ResponseEntity<String> putUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateRequest usuario) {
+        return usuarioService.putUsuario(id, usuario);
     }
 
     @Operation(summary = "Eliminar un usuario")
     @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUsuario(@PathVariable Long id) {
-        usuarioService.deleteUsuario(id);
+    public ResponseEntity<String> deleteUsuario(@PathVariable Long id) {
+        return usuarioService.deleteUsuario(id);
     }
+    
+    //REQUERIMIENTOS DEL ENUNCIADO
 
     // Fue una prueba para entender la comunicacion entre 2 microservicios utilizando client OpenFeign
     @Operation(summary = "Obtener monopatines cercanos")

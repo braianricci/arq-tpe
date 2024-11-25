@@ -5,6 +5,8 @@ import com.example.mantenimiento_service.model.entity.Mantenimiento;
 import com.example.mantenimiento_service.repository.MantenimientoRepository;
 import com.example.mantenimiento_service.service.MantenimientoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,7 @@ public class MatenimientoServiceImpl implements MantenimientoService {
     @Autowired
     private MantenimientoRepository mantenimientoRepository;
 
-    // CRUD basico
-
+ 
     @Override
     public List<MantenimientoResponse> getAllMantenimientos() {
         List<Mantenimiento> mantenimiento = mantenimientoRepository.findAll();
@@ -31,24 +32,32 @@ public class MatenimientoServiceImpl implements MantenimientoService {
     }
 
     @Override
-    public MantenimientoResponse addMantenimiento(MantenimientoCreateRequest mantenimientoRequest) {
+    public ResponseEntity<String> addMantenimiento(MantenimientoCreateRequest mantenimientoRequest) {
         Mantenimiento mantenimiento = new Mantenimiento(mantenimientoRequest.getMonopatinId());
         mantenimientoRepository.save(mantenimiento);
-        return convertToDto(mantenimiento);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Registro de mantenimiento creado exitosamente.");
     }
 
     @Override
-    public void updateMantenimiento(Long id, MantenimientoUpdateRequest mantenimientoRequest) {
-        Mantenimiento mantenimiento = mantenimientoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mantenimiento no encontrado"));
-        mantenimiento.setFechaFin(mantenimientoRequest.getFechaFin());
-        mantenimiento.setEstado(mantenimientoRequest.getEstado());
-        mantenimientoRepository.save(mantenimiento);
+    public ResponseEntity<String> updateMantenimiento(Long id, MantenimientoUpdateRequest mantenimientoRequest) {
+        Mantenimiento mantenimiento = mantenimientoRepository.findById(id).orElse(null);
+        if(mantenimiento != null){
+            mantenimiento.setFechaFin(mantenimientoRequest.getFechaFin());
+            mantenimiento.setEstado(mantenimientoRequest.getEstado());
+            mantenimientoRepository.save(mantenimiento);
+            return ResponseEntity.status(HttpStatus.OK).body("Mantenimiento actualizado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe registro de mantenimiento con ese ID.");
     }
 
     @Override
-    public void deleteMantenimiento(Long id) {
-        mantenimientoRepository.deleteById(id);
+    public ResponseEntity<String> deleteMantenimiento(Long id) {
+        Mantenimiento mantenimiento = mantenimientoRepository.findById(id).orElse(null);
+        if(mantenimiento != null){
+            mantenimientoRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Mantenimiento eliminado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No existe registro de mantenimiento con ese ID.");
     }
 
     // Método auxiliar para convertir entidad a DTO

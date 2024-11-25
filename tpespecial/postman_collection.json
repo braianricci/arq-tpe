@@ -14,9 +14,21 @@
 					"item": [
 						{
 							"name": "All",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
 								"method": "GET",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "http://localhost:8080/usuarios",
 									"protocol": "http",
@@ -54,11 +66,14 @@
 						{
 							"name": "Create",
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"Carlos\",\r\n    \"apellido\" : \"Perez\",\r\n    \"email\" : \"carlos@gmail.com\",\r\n    \"telefono\" : \"2494551242\"\r\n}",
+									"raw": "{\r\n    \"nombre\" : \"Saul\",\r\n    \"apellido\" : \"Perez\",\r\n    \"telefono\" : \"2494551242\",\r\n    \"email\" : \"vieja@gmail.com\",\r\n    \"password\" : 123456\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -83,11 +98,28 @@
 						{
 							"name": "Update",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAZ21haWwuY29tIiwicm9sZSI6IlVTVUFSSU8iLCJpYXQiOjE3MzIyNDMwNDIsImV4cCI6MTczMjI0NjY0Mn0.mea1gq6GGiJCs9Vyq4u78WLGXHbl8Kry7g5lw3jOTck",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
-								"header": [],
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\" : \"Nuevonombre\",\r\n    \"apellido\" : \"Perez\",\r\n    \"email\" : \"nuevoemail@gmail.com\",\r\n    \"telefono\" : \"2494559242\"\r\n}",
+									"raw": "{\r\n    \"rol\" : \"ADMIN\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -113,6 +145,16 @@
 						{
 							"name": "Delete",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTczMjIzMDIyOSwiZXhwIjoxNzMyMjMzODI5fQ.uh2mbmY7ZGm_un3hfHE8lWndUOw4RgEf_hFA5G96jJs",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"url": {
@@ -126,6 +168,59 @@
 										"usuarios",
 										"delete",
 										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "MonopatinesCercanos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/usuario/monopatines/cercanos/40.7128/-74.0060/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuario",
+										"monopatines",
+										"cercanos",
+										"40.7128",
+										"-74.0060",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"carlos@gmail.com\",\r\n    \"password\": 123456\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/usuarios/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"usuarios",
+										"login"
 									]
 								}
 							},
@@ -219,14 +314,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/cuentas/update/1",
+									"raw": "http://localhost:8080/cuenta/update/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "8080",
 									"path": [
-										"cuentas",
+										"cuenta",
 										"update",
 										"1"
 									]
@@ -265,17 +360,27 @@
 				{
 					"name": "All",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjYXJsb3NAZ21haWwuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzMyMjQ5NzMyLCJleHAiOjE3MzIyNTMzMzJ9.kO6WTcUWpgsk42ioEkA4uZtPpXnmNzk_RdOLq5CywjU",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/usuarios",
+							"raw": "http://localhost:8080/monopatines",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"usuarios"
+								"monopatines"
 							]
 						}
 					},
@@ -308,7 +413,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\" : \"Carlos\",\r\n    \"apellido\" : \"Perez\",\r\n    \"email\" : \"carlos@gmail.com\",\r\n    \"telefono\" : \"2494551242\"\r\n}",
+							"raw": "{\r\n    \"modelo\" : \"ford\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -337,7 +442,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\" : \"Nuevonombre\",\r\n    \"apellido\" : \"Perez\",\r\n    \"email\" : \"nuevoemail@gmail.com\",\r\n    \"telefono\" : \"2494559242\"\r\n}",
+							"raw": "{\r\n    \"ubicacion\": {\r\n        \"x\": 40.7357,\r\n        \"y\": -74.0059 \r\n    }\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -345,7 +450,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/monopatines/put/1",
+							"raw": "http://localhost:8080/monopatines/put/6730f59831b49a414d992d88",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -354,7 +459,7 @@
 							"path": [
 								"monopatines",
 								"put",
-								"1"
+								"6730f59831b49a414d992d88"
 							]
 						}
 					},
@@ -366,7 +471,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/monopatin/delete/1",
+							"raw": "http://localhost:8080/monopatines/delete/6727fa5fa7f9270ca7a808ea",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -375,7 +480,27 @@
 							"path": [
 								"monopatines",
 								"delete",
-								"1"
+								"6727fa5fa7f9270ca7a808ea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Mantenimiento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/monopatines/RegistrarMantenimiento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monopatines",
+								"RegistrarMantenimiento"
 							]
 						}
 					},
@@ -392,14 +517,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/usuarios",
+							"raw": "http://localhost:8080/viajes",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"usuarios"
+								"viajes"
 							]
 						}
 					},
@@ -432,7 +557,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"usuarioId\": 1,\r\n    \"monopatinId\": 101,\r\n    \"fechaInicio\": \"2024-11-03T10:30:00\",\r\n    \"tarifaAplicada\": 15.75\r\n}",
+							"raw": "{\r\n    \"usuarioId\": 1,\r\n    \"monopatinId\": \"6730f58b31b49a414d992d86\",\r\n    \"tarifaAplicada\": 15.75\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -469,7 +594,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/viajes/put/1",
+							"raw": "http://localhost:8080/viajes/put/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -478,7 +603,7 @@
 							"path": [
 								"viajes",
 								"put",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -490,7 +615,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/viajes/delete/1",
+							"raw": "http://localhost:8080/viajes/delete/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -499,7 +624,7 @@
 							"path": [
 								"viajes",
 								"delete",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -535,7 +660,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/paradas/1",
+							"raw": "http://localhost:8080/paradas/6728fe3160e2f309e2b517b3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -543,7 +668,7 @@
 							"port": "8080",
 							"path": [
 								"paradas",
-								"1"
+								"6728fe3160e2f309e2b517b3"
 							]
 						}
 					},
@@ -614,7 +739,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/paradas/delete/1",
+							"raw": "http://localhost:8080/paradas/delete/6728fe0c60e2f309e2b517b2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -623,7 +748,367 @@
 							"path": [
 								"paradas",
 								"delete",
+								"6728fe0c60e2f309e2b517b2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mantenimiento-Service",
+			"item": [
+				{
+					"name": "All",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "By ID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/monopatines/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monopatines",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mantenimientos/put/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mantenimientos",
+								"put",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/mantenimientos/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"mantenimientos",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "B- Cambiar estado de cuenta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzIyNTIzMTYsImV4cCI6MTczMjI1NTkxNn0.14U9q5uaJrmWRF0jxTUnsJDt637CfA4H8xJODTq1z1o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"habilitada\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cuentas/{id}/cambiar-estado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cuentas",
+								"{id}",
+								"cambiar-estado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "C- Monopatines c/mas viajes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzIyNTIzMTYsImV4cCI6MTczMjI1NTkxNn0.14U9q5uaJrmWRF0jxTUnsJDt637CfA4H8xJODTq1z1o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"viajesMinimos\": 20,\r\n    \"anio\": 2023\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/viajes/monopatines-con-mas-viajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"viajes",
+								"monopatines-con-mas-viajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "D- Total facturado en X rango",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzIyNTIzMTYsImV4cCI6MTczMjI1NTkxNn0.14U9q5uaJrmWRF0jxTUnsJDt637CfA4H8xJODTq1z1o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"anio\": 2023,\r\n   \"desdeMes\": 4,\r\n   \"hastaMes\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/viajes/total-facturado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"viajes",
+								"total-facturado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "E- En Operacion vs Mantenimiento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzIyNTIzMTYsImV4cCI6MTczMjI1NTkxNn0.14U9q5uaJrmWRF0jxTUnsJDt637CfA4H8xJODTq1z1o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/monopatines/total-en-operacion-y-mantenimiento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monopatines",
+								"total-en-operacion-y-mantenimiento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "F- Ajustar Precios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nuevaTarifaNormal\": 10.5,\r\n    \"nuevaTarifaPausaExtendida\": 14.4,\r\n    \"fechaEfectiva\": \"2024-12-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/viajes/ajustar-precios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"viajes",
+								"ajustar-precios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "C- Buscar Monopatines Cercanos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3JnZUBnbWFpbC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MzIyNTIzMTYsImV4cCI6MTczMjI1NTkxNn0.14U9q5uaJrmWRF0jxTUnsJDt637CfA4H8xJODTq1z1o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/monopatines/cercanos/{latitud}/{longitud}/{radio}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monopatines",
+								"cercanos",
+								"{latitud}",
+								"{longitud}",
+								"{radio}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Encargardo de Mantenimiento",
+			"item": [
+				{
+					"name": "A- Reporte del uso segun kms",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuQGdtYWlsLmNvbSIsInJvbGUiOiJNQU5URU5JTUlFTlRPIiwiaWF0IjoxNzMyMjMyOTc5LCJleHAiOjE3MzIyMzY1Nzl9.ErULCC2Ej6khg8QWyTWKv90OKvcE1WUpWRZEx6KEAxo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"IncluirTiempo\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/monopatines/uso-por-kilometros",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monopatines",
+								"uso-por-kilometros"
 							]
 						}
 					},

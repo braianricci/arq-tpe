@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.parada_service.model.dto.*;
@@ -29,23 +31,31 @@ public class ParadaServiceImpl implements ParadaService{
         return paradaOpt.map(this::convertToResponse).orElse(null);
     }
 
-    public void addParada(ParadaRequest paradaRequest) {
+    public ResponseEntity<String> addParada(ParadaRequest paradaRequest) {
         Parada nuevaParada = new Parada(paradaRequest.getNombre(), paradaRequest.getUbicacion());
         paradaRepository.save(nuevaParada);
+        return ResponseEntity.status(HttpStatus.OK).body("Parada creada exitosamente.");
     }
 
-    public void putParada(String id, ParadaRequest paradaRequest) {
-        Optional<Parada> paradaOpt = paradaRepository.findById(id);
-        if (paradaOpt.isPresent()) {
-            Parada parada = paradaOpt.get();
+    public ResponseEntity<String> putParada(String id, ParadaRequest paradaRequest) {
+        Parada parada = paradaRepository.findById(id).orElse(null);
+        if (parada != null) {
             parada.setNombre(paradaRequest.getNombre());
             parada.setUbicacion(paradaRequest.getUbicacion());
             paradaRepository.save(parada);
+            return ResponseEntity.status(HttpStatus.OK).body("Parada actualizada exitosamente.");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La parada no existe");
     }
+        
 
-    public void deleteParada(String id) {
-        paradaRepository.deleteById(id);
+    public ResponseEntity<String> deleteParada(String id) {
+        Parada parada = paradaRepository.findById(id).orElse(null);
+        if (parada != null) {
+            paradaRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Parada eliminada exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La parada no existe");
     }
 
     

@@ -8,6 +8,8 @@ import com.example.viaje_service.repository.PrecioRepository;
 import com.example.viaje_service.repository.ViajeRepository;
 import com.example.viaje_service.service.ViajeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -53,19 +55,28 @@ public class ViajeServiceImpl implements ViajeService {
     }
 
     @Override
-    public void updateViaje(Long id, ViajeUpdateRequest viajeRequest) {
-        Viaje viaje = viajeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
-        viaje.setKilometrosRecorridos(viajeRequest.getKilometrosRecorridos());
-        viaje.setFechaFin(viajeRequest.getFechaFin());
-        viaje.setEstado(viajeRequest.getEstado());
-        viaje.setPrecioAplicado(calcularPrecio(viaje));
-        viajeRepository.save(viaje);
+    public ResponseEntity<String> updateViaje(Long id, ViajeUpdateRequest viajeRequest) {
+        Viaje viaje = viajeRepository.findById(id).orElse(null);
+
+        if(viaje != null){
+            viaje.setKilometrosRecorridos(viajeRequest.getKilometrosRecorridos());
+            viaje.setFechaFin(viajeRequest.getFechaFin());
+            viaje.setEstado(viajeRequest.getEstado());
+            viaje.setPrecioAplicado(calcularPrecio(viaje));
+            viajeRepository.save(viaje);
+            return ResponseEntity.status(HttpStatus.OK).body("Viaje actualizado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El viaje no existe");
     }
 
     @Override
-    public void deleteViaje(Long id) {
-        viajeRepository.deleteById(id);
+    public ResponseEntity<String> deleteViaje(Long id) {
+        Viaje viaje = viajeRepository.findById(id).orElse(null);
+        if(viaje != null){
+            viajeRepository.deleteById(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Viaje eliminado exitosamente.");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("El viaje no existe");
     }
 
     // Método auxiliar para convertir entidad a DTO

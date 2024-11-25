@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.example.parada_service.model.dto.*;
 import com.example.parada_service.service.ParadaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Parada Controller", description = "APIs para gestionar paradas")
 @RestController
 @RequestMapping("/paradas")
 public class ParadaController {
@@ -16,31 +20,34 @@ public class ParadaController {
     @Autowired
     private ParadaService paradaService;
 
+
+    @Operation(summary = "Obtener todas las paradas")
     @GetMapping
     public List<ParadaResponse> getAllParadas() {
         return paradaService.getAllParadas();
     }
 
+    @Operation(summary = "Obtener una parada por ID")
     @GetMapping("/{id}")
     public ParadaResponse getParadaById(@PathVariable String id) {
         return paradaService.getParadaById(id);
     }
 
+    @Operation(summary = "Crear una parada")
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addParada(@RequestBody ParadaRequest parada) {
-        paradaService.addParada(parada);
+    public ResponseEntity<String> addParada(@RequestBody ParadaRequest parada) {
+        return paradaService.addParada(parada);
     }
 
+    @Operation(summary = "Actualizar una parada")
     @PutMapping("/put/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateParada(@PathVariable String id, @RequestBody ParadaRequest parada) {
-        paradaService.putParada(id, parada);
+    public ResponseEntity<String> updateParada(@PathVariable String id, @RequestBody ParadaRequest parada) {
+        return paradaService.putParada(id, parada);
     }
 
+    @Operation(summary = "Eliminar una parada")
     @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteParada(@PathVariable String id) {
-        paradaService.deleteParada(id);
+    public ResponseEntity<String> deleteParada(@PathVariable String id) {
+        return paradaService.deleteParada(id);
     }
 }

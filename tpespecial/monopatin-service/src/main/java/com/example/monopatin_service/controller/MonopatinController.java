@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.example.monopatin_service.model.dto.*;
 import com.example.monopatin_service.service.MonopatinService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Monopatin Controller", description = "APIs para gestionar monopatines")
 @RestController
 @RequestMapping("/monopatines")
 public class MonopatinController {
@@ -17,43 +20,41 @@ public class MonopatinController {
     @Autowired
     private MonopatinService monopatinService;
 
-    // Obtener todos los monopatines
+    @Operation(summary = "Obtener todos los monopatines")
     @GetMapping
     public List<MonopatinResponse> getAllMonopatines() {
         return monopatinService.getAllMonopatines();
     }
 
-    // Obtener un monopatin por ID
+    @Operation(summary = "Obtener monopatin por ID")
     @GetMapping("/{id}")
     public MonopatinResponse getMonopatinById(@PathVariable String id) {
         return monopatinService.getMonopatinById(id);
     }
 
-    // Crear
+    @Operation(summary = "Crear un monopatin")
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addMonopatin(@RequestBody MonopatinCreateRequest monopatin) {
-        monopatinService.addMonopatin(monopatin);
+    public ResponseEntity<String> addMonopatin(@RequestBody MonopatinCreateRequest monopatin) {
+        return monopatinService.addMonopatin(monopatin);
     }
 
-    // Actualizar
+    @Operation(summary = "Actualizar un monopatin")
     @PutMapping("/put/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void putMonopatin(@PathVariable String id, @RequestBody MonopatinUpdateRequest monopatin) {
-        monopatinService.putMonopatin(id, monopatin);
+    public ResponseEntity<String> putMonopatin(@PathVariable String id, @RequestBody MonopatinUpdateRequest monopatin) {
+        return monopatinService.putMonopatin(id, monopatin);
     }
 
-    // Eliminar
+    @Operation(summary = "Eliminar un monopatin")
     @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMonopatin(@PathVariable String id) {
-        monopatinService.deleteMonopatin(id);
+    public ResponseEntity<String> deleteMonopatin(@PathVariable String id) {
+        return monopatinService.deleteMonopatin(id);
     }
 
     // REQUERIMIENTOS ENUNCIADO
 
     // Registrar monopatín en mantenimiento
 
+    @Operation(summary = "Resgistrar un monopatín en mantenimiento")
     @PutMapping("/{id}/mantenimiento")
     public ResponseEntity<Void> registrarMantenimiento(@PathVariable String id) {
         monopatinService.marcarEnMantenimiento(id);
@@ -61,6 +62,7 @@ public class MonopatinController {
     }
 
     // Registrar fin de mantenimiento
+    @Operation(summary = "Registrar fin de mantenimiento de un monopatin")
     @PutMapping("/{id}/fin-mantenimiento")
     public ResponseEntity<Void> finalizarMantenimiento(@PathVariable String id) {
         monopatinService.marcarDisponible(id);
@@ -69,15 +71,16 @@ public class MonopatinController {
 
     // Reporte uso de monopatines por kilómetros para
     // establecer si un monopatín requiere de mantenimiento.
+    @Operation(summary = "Reporte de uso de los monopatines en km")
     @GetMapping("/uso-por-kilometros")
-    public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros(
-            @RequestBody IncluirTiempoEnPausaRequest request) {
+    public ResponseEntity<List<ReporteKilometrosDTO>> generarReportePorKilometros(@RequestBody IncluirTiempoEnPausaRequest request) {
         List<ReporteKilometrosDTO> reporte = monopatinService.obtenerUsoPorKilometros(request.isIncluirTiempo());
         return ResponseEntity.ok(reporte);
     }
 
     // Consultar la cantidad de monopatines en operacion vs cantidad
     // en mantenimiento
+    @Operation(summary = "Cantidad de monopatines en operacion y cantidad en mantenimiento")
     @GetMapping("/total-en-operacion-y-mantenimiento")
     public ResponseEntity<MonopatinesOperacionMantenimientoDTO> obtenerMonopatinesEnOperacionYMantenimiento() {
         int enOperacion = monopatinService.obtenerCantidadMonopatinesEnOperacion();
@@ -91,6 +94,7 @@ public class MonopatinController {
 
     // 3.g.Listado de los monopatines cercanos a mi zona, para poder encontrar
     //     un monopatín cerca de mi ubicación
+    @Operation(summary = "Monopatines cercanos a mi zona")
     @GetMapping("/cercanos/{latitud}/{longitud}/{radio}")
     public List<MonopatinesCercanosDTO> obtenerMonopatinesCercanos(
             @PathVariable Double latitud,

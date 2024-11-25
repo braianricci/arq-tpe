@@ -3,13 +3,16 @@ package com.example.mantenimiento_service.controller;
 import com.example.mantenimiento_service.model.dto.*;
 import com.example.mantenimiento_service.service.MantenimientoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name = "Mantenimiento Controller", description = "APIs para gestionar mantenimientos")
 @RestController
 @RequestMapping("/mantenimientos")
 public class MantenimientoController {
@@ -17,40 +20,33 @@ public class MantenimientoController {
     @Autowired
     private MantenimientoService mantenimientoService;
 
-    // Obtener todos los mantenimientos
+    @Operation(summary = "Obtener todos los registros de mantenimientos")
     @GetMapping
-    public ResponseEntity<List<MantenimientoResponse>> getAllMantenimientos() {
-        List<MantenimientoResponse> viajes = mantenimientoService.getAllMantenimientos();
-        return ResponseEntity.ok(viajes);
+    public List<MantenimientoResponse> getAllMantenimientos() {
+        return mantenimientoService.getAllMantenimientos();
     }
 
-    // Obtener un mantenimiento por ID
+    @Operation(summary = "Obtener un registro de mantenimiento por ID")
     @GetMapping("/{id}")
-    public ResponseEntity<MantenimientoResponse> getMantenimientoById(@PathVariable Long id) {
-        MantenimientoResponse mantenimiento = mantenimientoService.getMantenimientoById(id);
-        return ResponseEntity.ok(mantenimiento);
+    public MantenimientoResponse getMantenimientoById(@PathVariable Long id) {
+        return mantenimientoService.getMantenimientoById(id);
     }
 
-    // Crear un nuevo mantenimiento
+    @Operation(summary = "Crear un nuevo registro de mantenimiento")
     @PostMapping("/add")
-    public ResponseEntity<MantenimientoResponse> addMantenimiento(
-            @RequestBody MantenimientoCreateRequest mantenimientoCreateRequest) {
-        MantenimientoResponse nuevoMantenimiento = mantenimientoService.addMantenimiento(mantenimientoCreateRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoMantenimiento);
+    public ResponseEntity<String> addMantenimiento(@RequestBody MantenimientoCreateRequest mantenimientoCreateRequest) {
+        return mantenimientoService.addMantenimiento(mantenimientoCreateRequest);
     }
 
-    // Actualizar un mantenimiento existente
+    @Operation(summary = "Actualizar un registro de mantenimiento")
     @PutMapping("put/{id}")
-    public ResponseEntity<Void> updateMantenimiento(@PathVariable Long id,
-            @RequestBody MantenimientoUpdateRequest mantenimientoUpdateRequest) {
-        mantenimientoService.updateMantenimiento(id, mantenimientoUpdateRequest);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> updateMantenimiento(@PathVariable Long id, @RequestBody MantenimientoUpdateRequest mantenimientoUpdateRequest) {
+        return mantenimientoService.updateMantenimiento(id, mantenimientoUpdateRequest);
     }
 
-    // Eliminar un mantenimiento
+    @Operation(summary = "Eliminar un resgistro de mantenimiento")
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<Void> deleteMantenimiento(@PathVariable Long id) {
-        mantenimientoService.deleteMantenimiento(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteMantenimiento(@PathVariable Long id) {
+        return mantenimientoService.deleteMantenimiento(id);
     }
 }

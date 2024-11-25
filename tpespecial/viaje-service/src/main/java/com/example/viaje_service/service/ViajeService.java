@@ -6,6 +6,7 @@ import com.example.viaje_service.model.dto.*;
 import com.example.viaje_service.model.entity.Precio;
 import com.example.viaje_service.model.entity.Viaje;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,9 +19,9 @@ public interface ViajeService {
 
     ViajeResponse addViaje(ViajeCreateRequest viaje);
 
-    void updateViaje(Long id, ViajeUpdateRequest viaje);
+    ResponseEntity<String> updateViaje(Long id, ViajeUpdateRequest viaje);
 
-    void deleteViaje(Long id);
+    ResponseEntity<String> deleteViaje(Long id);
 
     List<String> obtenerMonopatinesConMasViajes(int viajesMinimos, int anio);
 
