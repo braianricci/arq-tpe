@@ -103,13 +103,13 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
 - **Descripción:** Permite ajustar las tarifas normales y de pausa extendida para los viajes, a partir de una fecha efectiva.
 - **Body de Ejemplo:**
       
-      ```json    
-      {
-          "nuevaTarifaNormal": 10.5,
-          "nuevaTarifaPausaExtendida": 14.4,
-          "fechaEfectiva": "2024-12-01"
-      }
-      ```
+     ```json    
+     {
+        "nuevaTarifaNormal": 10.5,
+        "nuevaTarifaPausaExtendida": 14.4,
+        "fechaEfectiva": "2024-12-01"
+     }
+     ```
 
 ### G. Monopatines - Buscar Cercanos
 - **Endpoint:** `/monopatines/cercanos/{latitud}/{longitud}/{radio}`
