@@ -79,7 +79,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
     
 ### D. Viajes - Total Facturado
 - **Endpoint:** `/viajes/total-facturado`
-- **Método:** `POST`
+- **Método:** `GET`
 - **Descripción:** Calcula el total facturado por todos los viajes en un rango de meses dentro de un año determinado.
 -**Body de Ejemplo:**
      
