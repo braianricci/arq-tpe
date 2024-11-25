@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.usuario_service.model.dto.CuentaRequest;
 import com.example.usuario_service.model.dto.CuentaResponse;
+import com.example.usuario_service.model.dto.EstadoDeCuenta;
 import com.example.usuario_service.model.entity.Cuenta;
 import com.example.usuario_service.repository.CuentaRepository;
 import com.example.usuario_service.service.CuentaService;
@@ -69,10 +70,10 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
     @Override
-    public ResponseEntity<String> cambiarEstadoCuenta(Long id, boolean habilitada) {
+    public ResponseEntity<String> cambiarEstadoCuenta(Long id, EstadoDeCuenta estado) {
         Cuenta cuenta = cuentaRepository.findById(id).orElse(null);
         if(cuenta != null){
-            cuenta.setHabilitada(habilitada);
+            cuenta.setHabilitada(estado.getHabilitada());
             return ResponseEntity.status(HttpStatus.OK).body("Estado de cuenta modificado exitosamente.");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("La cuenta no existe.");

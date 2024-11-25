@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.usuario_service.model.dto.CuentaResponse;
+import com.example.usuario_service.model.dto.EstadoDeCuenta;
 import com.example.usuario_service.model.dto.CuentaRequest;
 import com.example.usuario_service.service.CuentaService;
 
@@ -56,9 +57,8 @@ public class CuentaController {
 
     @Operation(summary = "Habilitar o anular una cuenta")
     @PatchMapping("/{id}/cambiar-estado")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<String>  cambiarEstadoCuenta(@PathVariable Long id, @RequestBody boolean habilitada) {
-        return cuentaService.cambiarEstadoCuenta(id, habilitada);
+    public ResponseEntity<String>  cambiarEstadoCuenta(@PathVariable Long id, @RequestBody EstadoDeCuenta estado) {
+        return cuentaService.cambiarEstadoCuenta(id, estado);
     }
 
 }
