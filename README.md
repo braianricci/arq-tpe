@@ -54,7 +54,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
 
 ### B. Cuentas - Cambiar Estado
 - **Endpoint:** `/cuentas/{id}/cambiar-estado`
-- **Método:** `POST`
+- **Método:** `PATCH`
 - **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
 - **Body de ejemplo:**
     
