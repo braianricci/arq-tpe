@@ -33,7 +33,8 @@ Braian Ricci (braianricci@gmail.com), Esteban Villanueva (evillanueva@alumnos.ex
     ```
 
 4. Accede a la aplicación en `http://localhost:8080`
-
+   
+5. Para ver un ejemplo de Swagger acceder a 'http://localhost:8081/swagger-ui/index.html' (Usuario-Service)
 
 ## Endpoints Especiales
 
@@ -53,7 +54,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
 
 ### B. Cuentas - Cambiar Estado
 - **Endpoint:** `/cuentas/{id}/cambiar-estado`
-- **Método:** `POST`
+- **Método:** `PATCH`
 - **Descripcion:** Cambia el estado de una cuenta (habilitada o deshabilitada) basado en el ID del usuario.
 - **Body de ejemplo:**
     
@@ -78,7 +79,7 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
     
 ### D. Viajes - Total Facturado
 - **Endpoint:** `/viajes/total-facturado`
-- **Método:** `POST`
+- **Método:** `GET`
 - **Descripción:** Calcula el total facturado por todos los viajes en un rango de meses dentro de un año determinado.
 -**Body de Ejemplo:**
      
@@ -102,13 +103,13 @@ A continuación, se describen los endpoints clave del sistema, organizados por f
 - **Descripción:** Permite ajustar las tarifas normales y de pausa extendida para los viajes, a partir de una fecha efectiva.
 - **Body de Ejemplo:**
       
-      ```json    
-      {
-          "nuevaTarifaNormal": 10.5,
-          "nuevaTarifaPausaExtendida": 14.4,
-          "fechaEfectiva": "2024-12-01"
-      }
-      ```
+     ```json    
+     {
+        "nuevaTarifaNormal": 10.5,
+        "nuevaTarifaPausaExtendida": 14.4,
+        "fechaEfectiva": "2024-12-01"
+     }
+     ```
 
 ### G. Monopatines - Buscar Cercanos
 - **Endpoint:** `/monopatines/cercanos/{latitud}/{longitud}/{radio}`
